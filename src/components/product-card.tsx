@@ -28,18 +28,17 @@ export function ProductCard({
     <Link
       href={`/product/${product.slug}`}
       className={cn(
-        "group flex h-full flex-col overflow-hidden rounded-lg border border-hairline bg-card transition-all duration-200 hover:-translate-y-1 hover:border-forest/40 hover:shadow-xl hover:shadow-forest/10",
+        "group flex h-full flex-col overflow-hidden border-[1.5px] border-ink bg-card transition-[transform,box-shadow] duration-200 hover:-translate-x-[3px] hover:-translate-y-[3px] hover:shadow-press-xs",
         className
       )}
     >
-      <div className="relative p-3 pb-0">
-        <div className="pointer-events-none absolute inset-x-3 top-3 bottom-0 z-0 rounded-md bg-forest-soft/0 transition-colors duration-200 group-hover:bg-forest-soft/40" aria-hidden />
+      <div className="relative p-2.5 pb-0">
         {deal ? (
-          <span className="absolute left-4 top-4 z-10 rounded-full bg-oxblood px-2 py-0.5 text-[10px] font-bold tracking-wide text-primary-foreground shadow-sm">
+          <span className="absolute left-4 top-4 z-10 -rotate-3 border border-ink/30 bg-press px-1.5 py-0.5 font-mono text-[10px] font-bold tracking-wide text-paper shadow-press-xs">
             -{bnNum(product.discountPercent ?? 0)}%
           </span>
         ) : product.newArrival ? (
-          <span className="absolute left-4 top-4 z-10 rounded-full bg-forest px-2 py-0.5 text-[10px] font-bold tracking-wide text-primary-foreground shadow-sm">
+          <span className="absolute left-4 top-4 z-10 rotate-2 bg-ink px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-paper">
             নতুন
           </span>
         ) : null}
@@ -50,22 +49,22 @@ export function ProductCard({
           coverPattern={product.coverPattern}
           size="md"
           priority={priority}
-          className="relative z-[1] rounded-[3px] shadow-md shadow-ink/15 transition-transform duration-200 group-hover:-translate-y-0.5"
+          className="relative z-[1] rounded-none border border-ink/25 shadow-none transition-transform duration-200 group-hover:-translate-y-0.5"
         />
       </div>
-      <div className="mt-3 flex flex-1 flex-col px-3 pb-3">
-        <h3 className="line-clamp-2 min-h-[2.5rem] text-sm font-medium leading-snug text-foreground">
+      <div className="mt-2.5 flex flex-1 flex-col border-t border-hairline px-3 pb-3 pt-2.5">
+        <h3 className="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-snug text-foreground">
           {product.title}
         </h3>
         <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{product.authorDisplay}</p>
         <div className="mt-auto pt-2.5">
           {product.minPriceMinor != null ? (
             <p className="flex flex-wrap items-baseline gap-x-1.5">
-              <span className="text-sm font-bold text-foreground">
+              <span className="text-[15px] font-bold text-foreground">
                 {formatBdt(product.minPriceMinor)}
               </span>
               {deal ? (
-                <span className="text-xs text-muted-foreground line-through">
+                <span className="font-mono text-xs text-press line-through">
                   {formatBdt(product.compareAtMinor!)}
                 </span>
               ) : null}

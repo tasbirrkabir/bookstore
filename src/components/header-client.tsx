@@ -50,7 +50,7 @@ export function HeaderClient({
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="flex h-14 items-center gap-3 sm:h-16">
+      <div className="flex h-16 items-center gap-3">
         {/* Mobile menu */}
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
@@ -58,24 +58,29 @@ export function HeaderClient({
               <Menu className="size-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-80 p-0">
+          <SheetContent side="left" className="w-80 p-0 rounded-none border-ink">
             <SheetTitle className="sr-only">নেভিগেশন মেনু</SheetTitle>
             <div className="flex h-full flex-col">
-              <div className="hairline-b px-4 py-3">
-                <p className="font-display text-xl font-semibold">{storeName}</p>
-                <p className="text-xs text-muted-foreground">{storeNameEn}</p>
+              <div className="hairline-b flex items-center gap-3 px-4 py-4">
+                <span aria-hidden className="flex size-9 items-center justify-center bg-ink font-bengali-serif text-lg font-extrabold text-paper">
+                  পা
+                </span>
+                <span className="flex flex-col leading-none">
+                  <span className="font-bengali-serif text-xl font-extrabold">{storeName}</span>
+                  <span className="mt-1 font-mono text-[9px] uppercase tracking-[0.3em] text-muted-foreground">{storeNameEn}</span>
+                </span>
               </div>
-              <nav className="flex-1 overflow-y-auto px-4 py-3 scroll-slim" aria-label="মোবাইল নেভিগেশন">
-                <form onSubmit={submitSearch} className="mb-4 flex gap-2">
+              <nav className="flex-1 overflow-y-auto px-2 py-3 scroll-slim" aria-label="মোবাইল নেভিগেশন">
+                <form onSubmit={submitSearch} className="mb-4 flex gap-2 px-2">
                   <input
                     type="search"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="বই, লেখক, ISBN খুঁজুন…"
                     aria-label="বই খুঁজুন"
-                    className="h-10 w-full rounded-md border border-input bg-card px-3 text-sm"
+                    className="h-10 w-full border-[1.5px] border-ink bg-card px-3 text-sm placeholder:text-muted-foreground"
                   />
-                  <Button type="submit" size="icon" aria-label="খুঁজুন">
+                  <Button type="submit" size="icon" aria-label="খুঁজুন" className="rounded-none bg-ink text-paper hover:bg-press">
                     <Search className="size-4" />
                   </Button>
                 </form>
@@ -83,7 +88,7 @@ export function HeaderClient({
                 <MobileLink href="/shop?format=digital" onClick={() => setMobileOpen(false)}>ই-বুক / PDF</MobileLink>
                 <MobileLink href="/shop?sort=newest" onClick={() => setMobileOpen(false)}>নতুন বই</MobileLink>
                 <MobileLink href="/about" onClick={() => setMobileOpen(false)}>আমাদের কথা</MobileLink>
-                <p className="mt-4 mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">বিভাগ</p>
+                <p className="mt-4 mb-1 px-2 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-press">বিভাগ</p>
                 {categories.map((c) => (
                   <MobileLink key={c.slug} href={`/category/${c.slug}`} onClick={() => setMobileOpen(false)}>
                     {c.name}
@@ -94,28 +99,31 @@ export function HeaderClient({
           </SheetContent>
         </Sheet>
 
-        {/* Wordmark */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${storeName}, হোম`}>
+        {/* Masthead wordmark */}
+        <Link href="/" className="flex items-center gap-3 shrink-0" aria-label={`${storeName}, হোম`}>
           <span
             aria-hidden
-            className="flex size-9 items-center justify-center rounded-lg bg-forest text-[#ecd9a4] shadow-sm ring-1 ring-forest-deep/30"
+            className="flex size-10 items-center justify-center bg-ink font-bengali-serif text-xl font-extrabold text-paper shadow-press-xs"
           >
-            <BookOpen className="size-5" />
+            পা
           </span>
           <span className="flex flex-col leading-none">
-            <span className="font-display text-2xl sm:text-[1.7rem] font-semibold tracking-tight text-foreground">{storeName}</span>
-            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.22em] text-gold-deep">{storeNameEn}</span>
+            <span className="font-bengali-serif text-[1.65rem] font-extrabold tracking-tight text-foreground">
+              {storeName}
+              <span className="text-press">।</span>
+            </span>
+            <span className="hidden sm:inline font-mono text-[9px] uppercase tracking-[0.32em] text-ink-muted">{storeNameEn}</span>
           </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="ml-6 hidden lg:flex items-center gap-5 text-sm" aria-label="প্রধান নেভিগেশন">
-          <Link href="/shop" className="text-foreground/80 hover:text-primary transition-colors">বইসমূহ</Link>
+        <nav className="ml-8 hidden lg:flex items-center gap-6 text-[15px] font-medium" aria-label="প্রধান নেভিগেশন">
+          <Link href="/shop" className="link-press text-foreground/85 transition-colors hover:text-press">বইসমূহ</Link>
           <DropdownMenu>
-            <DropdownMenuTrigger className="text-foreground/80 hover:text-primary transition-colors data-[state=open]:text-primary outline-none">
+            <DropdownMenuTrigger className="link-press text-foreground/85 hover:text-press transition-colors data-[state=open]:text-press outline-none">
               বিভাগ
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-52 max-h-80 overflow-y-auto scroll-slim">
+            <DropdownMenuContent align="start" className="w-56 max-h-80 overflow-y-auto scroll-slim rounded-none border-[1.5px] border-ink">
               {categories.length === 0 ? (
                 <div className="px-3 py-2 text-sm text-muted-foreground">এখনও কোনো বিভাগ নেই</div>
               ) : (
@@ -127,13 +135,13 @@ export function HeaderClient({
               )}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Link href="/shop?sort=newest" className="text-foreground/80 hover:text-primary transition-colors">নতুন বই</Link>
-          <Link href="/shop?format=digital" className="text-foreground/80 hover:text-primary transition-colors">ই-বুক</Link>
-          <Link href="/about" className="text-foreground/80 hover:text-primary transition-colors">আমাদের কথা</Link>
+          <Link href="/shop?sort=newest" className="link-press text-foreground/85 transition-colors hover:text-press">নতুন বই</Link>
+          <Link href="/shop?format=digital" className="link-press text-foreground/85 transition-colors hover:text-press">ই-বুক</Link>
+          <Link href="/about" className="link-press text-foreground/85 transition-colors hover:text-press">আমাদের কথা</Link>
         </nav>
 
         {/* Search (desktop) */}
-        <form onSubmit={submitSearch} className="ml-auto hidden md:flex w-56 lg:w-80 items-center" role="search">
+        <form onSubmit={submitSearch} className="ml-auto hidden md:flex w-52 lg:w-72 items-center" role="search">
           <div className="relative w-full">
             <input
               type="search"
@@ -141,13 +149,13 @@ export function HeaderClient({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="বই, লেখক, ISBN খুঁজুন…"
               aria-label="বই খুঁজুন"
-              className="h-10 w-full rounded-full border border-input bg-card pl-10 pr-10 text-sm placeholder:text-muted-foreground focus:border-ring"
+              className="h-10 w-full border-[1.5px] border-ink bg-card pl-9 pr-11 text-sm placeholder:text-muted-foreground focus:shadow-press-xs outline-none transition-shadow"
             />
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gold-deep" aria-hidden />
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" aria-hidden />
             <button
               type="submit"
               aria-label="সার্চ করুন"
-              className="absolute right-1 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-forest text-[#ecd9a4] transition hover:bg-forest-deep"
+              className="absolute right-0 top-0 flex h-full w-10 items-center justify-center bg-ink text-paper transition-colors hover:bg-press"
             >
               <ArrowRightIcon className="size-4" />
             </button>
@@ -159,7 +167,7 @@ export function HeaderClient({
           <Link
             href="/shop"
             aria-label="বই খুঁজুন"
-            className="inline-flex size-10 items-center justify-center rounded-md text-foreground/80 hover:bg-accent md:hidden"
+            className="inline-flex size-10 items-center justify-center text-foreground/80 hover:text-press md:hidden"
           >
             <Search className="size-5" />
           </Link>
@@ -167,11 +175,11 @@ export function HeaderClient({
           {/* Account */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="অ্যাকাউন্ট">
+              <Button variant="ghost" size="icon" aria-label="অ্যাকাউন্ট" className="hover:bg-press-soft/60">
                 <User className="size-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuContent align="end" className="w-56 rounded-none border-[1.5px] border-ink">
               {isLoggedIn ? (
                 <>
                   <DropdownMenuLabel>{userName ?? "অ্যাকাউন্ট"}</DropdownMenuLabel>
@@ -215,12 +223,12 @@ export function HeaderClient({
           <Link
             href="/cart"
             aria-label={`কার্ট, ${cartCount}টি আইটেম`}
-            className="relative inline-flex size-10 items-center justify-center rounded-md text-foreground/80 hover:bg-accent"
+            className="relative inline-flex size-10 items-center justify-center text-foreground/80 hover:text-press"
           >
             <ShoppingCart className="size-5" />
             {cartCount > 0 && (
               <span
-                className="absolute -top-0.5 -right-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-foreground"
+                className="absolute top-0.5 right-0 flex h-4.5 min-w-4.5 items-center justify-center bg-press px-1 font-mono text-[10px] font-semibold text-paper"
                 aria-hidden
               >
                 {cartCount > 9 ? "৯+" : cartCount.toLocaleString("bn-BD")}
@@ -238,7 +246,7 @@ function MobileLink({ href, children, onClick }: { href: string; children: React
     <Link
       href={href}
       onClick={onClick}
-      className="block rounded-md px-2 py-2.5 text-sm text-foreground/85 hover:bg-accent hover:text-foreground"
+      className="block border-b border-hairline px-2 py-3 text-[15px] text-foreground/85 hover:bg-press-soft/40 hover:text-press"
     >
       {children}
     </Link>
@@ -265,19 +273,22 @@ function LogoutButton() {
   );
 }
 
-/** Dismissible announcement strip. */
+/** Dismissible announcement strip, styled as a print notice. */
 export function Announcement({ text }: { text: string }) {
   const [hidden, setHidden] = useState(false);
   if (hidden) return null;
   return (
-    <div className="bg-primary text-primary-foreground">
-      <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-2 text-center text-xs sm:text-sm">
-        <p className="flex-1">{text}</p>
+    <div className="bg-ink text-[#f2ecdb]">
+      <div className="mx-auto flex max-w-7xl items-center justify-center gap-3 px-4 py-2 text-center">
+        <span className="hidden sm:inline-block shrink-0 bg-press px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-paper">
+          নোটিশ
+        </span>
+        <p className="flex-1 text-xs sm:text-[13px]">{text}</p>
         <button
           type="button"
           onClick={() => setHidden(true)}
           aria-label="ঘোষণা বন্ধ করুন"
-          className="shrink-0 rounded p-1 hover:bg-primary-foreground/15"
+          className="shrink-0 p-1 text-[#f2ecdb]/70 hover:text-paper"
         >
           <X className="size-3.5" />
         </button>

@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter, Noto_Sans_Bengali, Noto_Serif_Bengali } from "next/font/google";
+import { Fraunces, Inter, Hind_Siliguri, Noto_Serif_Bengali, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { SiteHeader, SiteFooter } from "@/components/site-shell";
 
-const display = Cormorant_Garamond({
+/* Latin display serif with real editorial personality */
+const display = Fraunces({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 const body = Inter({
@@ -15,15 +16,24 @@ const body = Inter({
   subsets: ["latin"],
 });
 
-const bengali = Noto_Sans_Bengali({
+/* Bengali body text */
+const bengali = Hind_Siliguri({
   variable: "--font-bengali",
-  subsets: ["bengali"],
+  subsets: ["bengali", "latin"],
   weight: ["400", "500", "600", "700"],
 });
 
+/* Bengali literary serif for headlines */
 const bengaliSerif = Noto_Serif_Bengali({
   variable: "--font-bengali-serif",
   subsets: ["bengali"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+/* Print-style mono for labels, indices and numbers */
+const mono = IBM_Plex_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
@@ -50,7 +60,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f5f1e6",
+  themeColor: "#f5f1e6", // paper
   width: "device-width",
   initialScale: 1,
 };
@@ -63,7 +73,7 @@ export default function RootLayout({
   return (
     <html lang="bn" suppressHydrationWarning>
       <body
-        className={`${display.variable} ${body.variable} ${bengali.variable} ${bengaliSerif.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`${display.variable} ${body.variable} ${bengali.variable} ${bengaliSerif.variable} ${mono.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <a
           href="#main-content"

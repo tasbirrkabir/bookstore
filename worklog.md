@@ -230,3 +230,26 @@ Stage Summary:
 - All badges, prices, discounts and deal data are grounded in the DB (no invented ratings/percentages).
 - Newsletter signup is functional end to end (schema + API + UI).
 - No em or en dashes in any user-visible text, including schema defaults.
+
+---
+Task ID: 5
+Agent: Z.ai Code (main)
+Task: User feedback round 3: "Color change photo add eishob korlei hobe! Website ta still ai slop lagche". Diagnosis: palette swaps and photos were not the problem, the structure itself was the generic AI ecommerce template (gradient hero, icon circles, rounded-2xl soft cards, centered eyebrows). Rebuilt the design language structurally as a Bengali press / book-fair editorial system.
+
+Work Log:
+- Generated 3 new editorial photo plates with image-generation skill into public/images/: plate-books-red.jpg (768x1344, book stack tied with red thread on deep red, regenerated once to remove garbled AI text), plate-open-book.jpg (1024x1024, open book + brass glasses + tea flat lay), plate-shelf.jpg (1344x768, old bookshop shelf wall in warm light).
+- layout.tsx font system: Fraunces (Latin display), Hind Siliguri (Bengali body), Noto Serif Bengali up to 900 (Bengali headlines), IBM Plex Mono (labels, indices, numbers).
+- globals.css press design system: sharp --radius 0.25rem, --press / --press-deep / --press-soft vermilion tokens, hard offset shadows (shadow-press/-sm/-xs/-red, no blur), flat .bg-forest/.bg-forest-deep (gradients removed), paper grain overlay via SVG feTurbulence body::after, .rule-double, .mark-red marker highlight, .halftone dots, .link-press underline sweep, @keyframes marquee + .animate-marquee + .marquee-hover pause, .animate-rotate-slow stamp spin.
+- header-client.tsx print masthead: ink square "পা" mark + serif black wordmark with red dari, square search with ink submit, red square cart badge, ink announcement strip with red নোটিশ tag, bordered mobile sheet.
+- product-card.tsx: print card (1.5px ink border, no radius, hard shadow on hover shift, rotated red -X% stamp / ink নতুন stamp, hairline divider, mono strike price). Applies across shop/category/collections pages.
+- site-shell.tsx: solid card header with thick ink bottom rule; footer rebuilt as ink plate: red top band, giant পাতা। wordmark, decorative print barcode (PATA / DHAKA), boxed 4-cell grid (gap-px technique) with red mono headers, mono legal line.
+- page.tsx full structural rebuild: ink ticker marquee with grounded highlights; editorial hero (giant Noto Serif Bengali black headline with red marker highlight, framed photo plates with thick ink borders + hard shadows + rotated overlap + rotating circular SVG stamp, halftone patch, ground stats table from real category counts); category section as numbered index rows (০১..০৯, serif names, mono counts, no icons); bestsellers 6-across print grid; deal of the week as a coupon ticket (dashed border, perforation notches, rotated red stamp, real discounted product, rotated photo plate); full-width ink quote band (Jibanananda Das, বনলতা সেন); collections as numbered print cards; why-Pata as numbered ruled grid (icons removed); newsletter as boxed card with shelf photo + red button; arrivals shelf.
+- newsletter-form.tsx restyled for light paper background (ink-bordered input, press-red submit, forest success state).
+- Bug found during verification: Turbopack persistent cache served stale compiled CSS after edits and even after server restart (byte-identical CSS, missing press/marquee utilities); fixed by rm -rf .next and restarting via .zscripts/dev.sh.
+- Fixed bestsellers orphan (xl:grid-cols-6 for 6 items).
+- Verified with Agent Browser: desktop 1440 (hero, ticker, stats, index rows, 6-across bestsellers with real -% stamps, deal ticket, quote band, collections, why grid, newsletter, footer) and mobile 375 (masthead, hero plates, index rows, 2-col cards, stacked footer); newsletter E2E submit success + row deleted after QA; add-to-cart works with toast and badge 1 -> 2; console clean; lint clean; no em/en dashes in any touched file.
+
+Stage Summary:
+- The storefront no longer uses any gradient hero, icon-in-circle strip, rounded-2xl card or soft shadow: the layout grammar is now ink rules, numbered indices, stamps, framed photo plates and a marquee, which is a structure AI templates do not produce.
+- Press red joins forest green + paper + ink; press red is used only for accents (stamps, indices, highlights, buttons).
+- All four site photos are used as framed plates (hero x2, deal ticket, newsletter), all claims (counts, discounts, prices) remain grounded in the DB.

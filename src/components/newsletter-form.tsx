@@ -39,8 +39,8 @@ export function NewsletterForm() {
 
   if (state === "done") {
     return (
-      <div className="flex items-center gap-3 rounded-lg border border-gold/40 bg-gold/10 px-4 py-3.5 text-sm text-[#f0e3bd]">
-        <MailCheck aria-hidden className="size-5 shrink-0 text-[#e3c06b]" />
+      <div className="flex items-center gap-3 border-[1.5px] border-ink bg-forest-soft px-4 py-3.5 text-sm text-forest-deep">
+        <MailCheck aria-hidden className="size-5 shrink-0 text-forest" />
         <p>ধন্যবাদ! নতুন বই আর অফারের খবর সবার আগে পাবেন।</p>
       </div>
     );
@@ -60,12 +60,12 @@ export function NewsletterForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="আপনার ইমেইল ঠিকানা"
           autoComplete="email"
-          className="h-11 flex-1 rounded-md border border-white/25 bg-white/10 px-3.5 text-sm text-[#f7f2e2] placeholder:text-[#f7f2e2]/50 outline-none transition focus:border-[#e3c06b] focus:bg-white/15"
+          className="h-11 flex-1 border-[1.5px] border-ink bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-shadow focus:shadow-press-xs"
         />
         <button
           type="submit"
           disabled={state === "busy"}
-          className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#e3c06b] px-6 text-sm font-bold text-forest-deep transition hover:bg-[#eed48a] disabled:opacity-60"
+          className="inline-flex h-11 items-center justify-center gap-2 border-[1.5px] border-ink bg-press px-6 text-sm font-bold text-paper transition-colors hover:bg-press-deep disabled:opacity-60"
         >
           {state === "busy" ? (
             <Loader2 aria-hidden className="size-4 animate-spin" />
@@ -76,11 +76,11 @@ export function NewsletterForm() {
         </button>
       </div>
       {state === "error" && message ? (
-        <p role="alert" className="text-xs font-medium text-[#f4b8a8]">
+        <p role="alert" className="text-xs font-semibold text-press-deep">
           {message}
         </p>
       ) : (
-        <p className="text-xs text-[#f7f2e2]/55">শুধু বই আর পড়ার খবর, বাড়তি মেইল নয়।</p>
+        <p className="text-xs text-muted-foreground">শুধু বই আর পড়ার খবর, বাড়তি মেইল নয়।</p>
       )}
     </form>
   );
