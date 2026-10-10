@@ -49,6 +49,10 @@ export type ProductCardDTO = {
   editorPick: boolean;
   minPriceMinor: number | null;
   hasDiscount: boolean;
+  /** Real compare-at amount of the discounted variant (null when no discount). */
+  compareAtMinor: number | null;
+  /** Whole percent off, grounded on the discounted variant (null when none). */
+  discountPercent: number | null;
   formats: FormatType[];
   categories: { slug: string; name: string }[];
 };
@@ -78,6 +82,16 @@ function toCard(p: ProductWithVariantsAndCategories): ProductCardDTO {
   const formats = [...new Set(active.map((v) => v.formatType as FormatType))];
   const order: FormatType[] = ["physical", "digital", "bundle"];
   formats.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+  // Ground the discount on the variant with the largest real markdown.
+  const discounted = active
+    .filter((v) => v.compareAtPriceMinor && v.compareAtPriceMinor > v.priceMinor)
+    .sort((a, b) => (b.compareAtPriceMinor! - b.priceMinor) - (a.compareAtPriceMinor! - a.priceMinor))[0];
+  const compareAtMinor = discounted?.compareAtPriceMinor ?? null;
+  const discountPercent = discounted
+    ? Math.round(((discounted.compareAtPriceMinor! - discounted.priceMinor) / discounted.compareAtPriceMinor!) * 100)
+    : null;
+
   return {
     id: p.id,
     slug: p.slug,
@@ -92,7 +106,9 @@ function toCard(p: ProductWithVariantsAndCategories): ProductCardDTO {
     newArrival: p.newArrival,
     editorPick: p.editorPick,
     minPriceMinor: minPrice(active),
-    hasDiscount: active.some((v) => v.compareAtPriceMinor && v.compareAtPriceMinor > v.priceMinor),
+    hasDiscount: !!discounted,
+    compareAtMinor,
+    discountPercent,
     formats,
     categories: p.categories.map((pc) => ({ slug: pc.category.slug, name: pc.category.name })),
   };
@@ -300,6 +316,35 @@ export async function homeModules() {
     collections,
     categories,
   };
+}
+
+/** The published variant with the biggest genuine markdown, for the deal banner. */
+export async function findDealProduct(): Promise<{
+  card: ProductCardDTO;
+  priceMinor: number;
+  compareAtMinor: number;
+  discountPercent: number;
+} | null> {
+  const rows = await db.product.findMany({
+    where: { status: "published", variants: { some: { isActive: true, compareAtPriceMinor: { gt: 0 } } } },
+    include: cardInclude,
+    take: 30,
+    orderBy: { createdAt: "desc" },
+  });
+
+  let best: { card: ProductCardDTO; priceMinor: number; compareAtMinor: number; discountPercent: number } | null = null;
+  for (const p of rows) {
+    for (const v of p.variants) {
+      if (!v.isActive || !v.compareAtPriceMinor || v.compareAtPriceMinor <= v.priceMinor) continue;
+      const percent = Math.round(((v.compareAtPriceMinor - v.priceMinor) / v.compareAtPriceMinor) * 100);
+      const saving = v.compareAtPriceMinor - v.priceMinor;
+      const bestSaving = best ? best.compareAtMinor - best.priceMinor : -1;
+      if (saving > bestSaving) {
+        best = { card: toCard(p), priceMinor: v.priceMinor, compareAtMinor: v.compareAtPriceMinor, discountPercent: percent };
+      }
+    }
+  }
+  return best;
 }
 
 /** Distinct author list for filters. */

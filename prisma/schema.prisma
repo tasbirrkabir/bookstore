@@ -1,4 +1,4 @@
-// PATA Bookstore — commerce schema (SQLite via Prisma)
+// PATA Bookstore ,  commerce schema (SQLite via Prisma)
 // Money is stored as INTEGER minor units (poisha, 1 BDT = 100 poisha) everywhere.
 // Enum-like fields are strings validated in application code (Prisma+SQLite does not support enums).
 
@@ -44,8 +44,8 @@ model StoreSetting {
   shippingInsideDhaka     Int      @default(7000) // poisha
   shippingOutsideDhaka    Int      @default(13000)
   freeShippingThreshold   Int? // poisha, null = disabled
-  deliveryEstimateInside  String   @default("ঢাকায় সাধারণত ২–৪ দিন")
-  deliveryEstimateOutside String   @default("ঢাকার বাইরে সাধারণত ৩–৭ দিন")
+  deliveryEstimateInside  String   @default("ঢাকায় সাধারণত ২ থেকে ৪ দিন")
+  deliveryEstimateOutside String   @default("ঢাকার বাইরে সাধারণত ৩ থেকে ৭ দিন")
   downloadLimitDefault    Int      @default(5)
   downloadExpiryDays      Int      @default(365)
   paymentProvider         String   @default("disabled") // "disabled" | "mock" (dev-only)
@@ -213,7 +213,7 @@ model Order {
   user               User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
   guestEmail         String?
   guestPhone         String?
-  guestTokenHash     String? // sha256 of capability token — never stored plaintext
+  guestTokenHash     String? // sha256 of capability token ,  never stored plaintext
   guestTokenExpiresAt DateTime?
   status             String    @default("pending_payment") // pending_payment|confirmed|processing|shipped|delivered|cancelled|returned|refunded
   paymentStatus      String    @default("unpaid") // unpaid|pending|paid|failed|cod_due|cod_collected|refunded
@@ -361,7 +361,7 @@ model Coupon {
   code             String    @unique
   description      String?
   discountType     String // "percent" | "fixed"
-  discountValue    Int // percent (1–100) or poisha for fixed
+  discountValue    Int // percent (1 থেকে 100) or poisha for fixed
   minSpendMinor    Int?
   maxDiscountMinor Int?
   appliesToFormat  String? // null = all | physical | digital | bundle
@@ -416,3 +416,12 @@ model AdminAuditLog {
   detail     String?
   createdAt  DateTime @default(now())
 }
+
+// ─── Newsletter signups (home page subscribe form) ───────────────────────────
+
+model NewsletterSignup {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+

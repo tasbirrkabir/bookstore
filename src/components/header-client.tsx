@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, ShoppingCart, Menu, X, User, LayoutDashboard, LogIn, BookOpen, Sparkles, Tag } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, User, LayoutDashboard, LogIn, BookOpen, Sparkles, Tag, ArrowRight as ArrowRightIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import {
@@ -98,13 +98,13 @@ export function HeaderClient({
         <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${storeName}, হোম`}>
           <span
             aria-hidden
-            className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-oxblood to-oxblood-deep text-primary-foreground shadow-sm"
+            className="flex size-9 items-center justify-center rounded-lg bg-forest text-[#ecd9a4] shadow-sm ring-1 ring-forest-deep/30"
           >
             <BookOpen className="size-5" />
           </span>
           <span className="flex flex-col leading-none">
             <span className="font-display text-2xl sm:text-[1.7rem] font-semibold tracking-tight text-foreground">{storeName}</span>
-            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{storeNameEn}</span>
+            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.22em] text-gold-deep">{storeNameEn}</span>
           </span>
         </Link>
 
@@ -133,17 +133,24 @@ export function HeaderClient({
         </nav>
 
         {/* Search (desktop) */}
-        <form onSubmit={submitSearch} className="ml-auto hidden md:flex w-56 lg:w-72 items-center" role="search">
+        <form onSubmit={submitSearch} className="ml-auto hidden md:flex w-56 lg:w-80 items-center" role="search">
           <div className="relative w-full">
-            <Search className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="বই, লেখক, ISBN খুঁজুন…"
               aria-label="বই খুঁজুন"
-              className="h-9 w-full rounded-md border border-input bg-card pl-8 pr-3 text-sm placeholder:text-muted-foreground focus:border-ring"
+              className="h-10 w-full rounded-full border border-input bg-card pl-10 pr-10 text-sm placeholder:text-muted-foreground focus:border-ring"
             />
+            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gold-deep" aria-hidden />
+            <button
+              type="submit"
+              aria-label="সার্চ করুন"
+              className="absolute right-1 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-forest text-[#ecd9a4] transition hover:bg-forest-deep"
+            >
+              <ArrowRightIcon className="size-4" />
+            </button>
           </div>
         </form>
 

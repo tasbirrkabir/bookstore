@@ -206,3 +206,27 @@ Stage Summary:
 - Site no longer looks plain white: hero, CTA band and footer are now rich maroon/ink color blocks, chips/cards/collections use the full warm accent palette.
 - No em dashes (or en dashes) anywhere user-visible: all replaced with commas, periods, or hyphens; DB announcement/about/product text cleaned too.
 - Browser-verified (Agent Browser): hero, chips, category page, format cards, collections, CTA, trust strip, dark footer, mobile layout, add-to-cart toast + cart badge + cart page all working; no console errors.
+
+---
+Task ID: 4
+Agent: Z.ai Code (main)
+Task: User feedback round 2: "AI slop lage ekhon" + 4 reference images (Bookory, Bookhaven, Bookito, mountain books store). Redesign the storefront to match the premium reference aesthetic and use real generated photography.
+
+Work Log:
+- Generated 3 photographic assets with the image-generation skill into public/images/: hero-books.jpg (1344x768, vintage hardcover stack, white bust, forest green wall, warm light), gift-books.jpg (1024x1024, gift box with green ribbon, regenerated once to remove garbled AI text), reading-cozy.jpg (1344x768, green armchair reading nook).
+- globals.css: swapped the maroon/parchment palette for classic bookshop colors (ivory #f5f1e6 background, forest green #1d4a38 primary, antique gold #a97d1f + soft variants); removed .bg-hero/.bg-ember/.bg-ink-deep/.pattern-dots gradient-slop utilities, added .bg-forest/.bg-forest-deep/.bg-parchment/.bg-ivory; focus ring + selection recolored; oxblood family kept for demo covers.
+- src/lib/catalog.ts: ProductCardDTO now carries grounded compareAtMinor + discountPercent (largest real markdown variant); added findDealProduct() returning the published variant with the biggest genuine markdown (card + priceMinor + compareAtMinor + discountPercent) for the deal banner.
+- src/components/product-card.tsx: real "-X%" chip (oxblood) or "নতুন" badge on cover, strike-through compare-at price, hover lift with forest-tinted wash, added ProductShelf (horizontal scroll row).
+- src/app/page.tsx: full homepage rebuild in the Bookhaven reference structure: full-bleed photographic hero with green gradient overlay + gold eyebrow + serif headline + trust row; 4-item feature strip with gold circle icons; browse-by-category 9-icon grid (slug-mapped Lucide icons, hover inverts to green/gold); bestsellers grid (6 across at xl via new ProductGrid colsClass prop); dark "কেন পাতা" band with 4 gold features; deal-of-the-week split banner (cozy photo + real discounted book with actual variant price, falls back to generic CTA when no discounts); curated collections in cream cards; newsletter split band (gift photo + subscribe form); new arrivals shelf.
+- Newsletter is real: prisma schema + db:push added NewsletterSignup (unique email); POST /api/newsletter validates with zod and upserts; src/components/newsletter-form.tsx posts with inline success/error states. E2E verified: submit -> success message -> row persisted.
+- header-client.tsx: forest green logo mark with gold book icon, gold PATA letterspacing, pill search with green submit button.
+- site-shell.tsx footer: deep green (.bg-forest-deep), gold uppercase headings, contact rows with icons, payment pills (COD + provider label), demo-mode badge, 4-column layout.
+- prisma/schema.prisma: removed remaining em/en dashes from comments and user-visible defaults (delivery estimates now "২ থেকে ৪ দিন" style), db:push applied.
+- Dev server note: the long-running server I killed could not be revived with nohup/setsid (sandbox reaps spawned processes between tool calls); recovered by running the platform launcher .zscripts/dev.sh via setsid, which persists.
+- Verified with Agent Browser: desktop 1280/1440 (hero, categories, bestsellers single row of 6 with -16%/-15% real badges, why-choose band, deal banner with পদ্মার দেশ ৳৮৫০ strike ৳১,০০০, newsletter form E2E, arrivals shelf, footer) and mobile 375px (hero, 3-col categories, stacked bands); add-to-cart works (badge 1 item); fresh page load console clean; lint + tsc clean; newsletter curl-test row deleted after QA.
+
+Stage Summary:
+- Storefront now matches the reference bookshop aesthetic: real photography, forest green + ivory + antique gold, serif display type, restrained blocks instead of gradient color rotations.
+- All badges, prices, discounts and deal data are grounded in the DB (no invented ratings/percentages).
+- Newsletter signup is functional end to end (schema + API + UI).
+- No em or en dashes in any user-visible text, including schema defaults.

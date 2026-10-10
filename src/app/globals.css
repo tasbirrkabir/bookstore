@@ -40,6 +40,12 @@
   --color-paper: var(--paper);
   --color-ink: var(--ink);
   --color-ink-muted: var(--ink-muted);
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-forest-soft: var(--forest-soft);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-soft: var(--gold-soft);
   --color-oxblood: var(--oxblood);
   --color-oxblood-deep: var(--oxblood-deep);
   --color-oxblood-soft: var(--oxblood-soft);
@@ -64,10 +70,16 @@
 :root {
   --radius: 0.5rem;
 
-  /* Editorial bookstore palette, warm parchment ground with saturated accents */
-  --paper: #f3ead7;
-  --ink: #26251d;
-  --ink-muted: #7d7462;
+  /* Classic bookshop palette: ivory paper, deep forest green, antique gold */
+  --paper: #f5f1e6;
+  --ink: #23291f;
+  --ink-muted: #75705d;
+  --forest: #1d4a38;
+  --forest-deep: #123528;
+  --forest-soft: #e0e8de;
+  --gold: #a97d1f;
+  --gold-deep: #7d5b12;
+  --gold-soft: #f2e7c8;
   --oxblood: #7a263a;
   --oxblood-deep: #5e1c2d;
   --oxblood-soft: #f3dfe0;
@@ -82,38 +94,38 @@
   --teal-soft: #dfeae4;
   --plum: #5c3a5e;
   --plum-soft: #ebe0eb;
-  --hairline: #e2d5ba;
+  --hairline: #e4dcc4;
 
-  --background: #f3ead7;
-  --foreground: #26251d;
-  --card: #fffcf4;
-  --card-foreground: #26251d;
-  --popover: #fffcf4;
-  --popover-foreground: #26251d;
-  --primary: #7a263a;
-  --primary-foreground: #fdf8f5;
-  --secondary: #e9ecdc;
-  --secondary-foreground: #3d4238;
-  --muted: #ece0c8;
-  --muted-foreground: #7d7462;
-  --accent: #e9ecdc;
-  --accent-foreground: #44503c;
+  --background: #f5f1e6;
+  --foreground: #23291f;
+  --card: #fdfbf4;
+  --card-foreground: #23291f;
+  --popover: #fdfbf4;
+  --popover-foreground: #23291f;
+  --primary: #1d4a38;
+  --primary-foreground: #f5f2e7;
+  --secondary: #eef0e4;
+  --secondary-foreground: #2c4a3c;
+  --muted: #ebe4d0;
+  --muted-foreground: #75705d;
+  --accent: #f2e7c8;
+  --accent-foreground: #6b5218;
   --destructive: #a13232;
-  --border: #e2d5ba;
-  --input: #d9c9a8;
-  --ring: #7a263a;
+  --border: #e4dcc4;
+  --input: #d8cfb4;
+  --ring: #1d4a38;
   --success: #3d6b4f;
   --success-foreground: #f2f7f0;
   --warning: #946200;
   --warning-foreground: #fff9ec;
-  --sidebar: #fffcf4;
-  --sidebar-foreground: #26251d;
-  --sidebar-primary: #7a263a;
-  --sidebar-primary-foreground: #fdf8f5;
-  --sidebar-accent: #ece0c8;
-  --sidebar-accent-foreground: #26251d;
-  --sidebar-border: #e2d5ba;
-  --sidebar-ring: #7a263a;
+  --sidebar: #fdfbf4;
+  --sidebar-foreground: #23291f;
+  --sidebar-primary: #1d4a38;
+  --sidebar-primary-foreground: #f5f2e7;
+  --sidebar-accent: #ebe4d0;
+  --sidebar-accent-foreground: #23291f;
+  --sidebar-border: #e4dcc4;
+  --sidebar-ring: #1d4a38;
 }
 
 @layer base {
@@ -125,38 +137,30 @@
     font-feature-settings: "liga" 1, "kern" 1;
   }
   ::selection {
-    background: #7a263a22;
+    background: #1d4a3822;
   }
 }
 
 /* ─── Rich color blocks ─────────────────────────────────────────────────── */
 
-/* Hero maroon gradient with warm glow */
-.bg-hero {
-  background:
-    radial-gradient(110% 130% at 88% -10%, rgba(212, 146, 40, 0.38) 0%, transparent 52%),
-    radial-gradient(130% 150% at -10% 115%, rgba(18, 7, 11, 0.55) 0%, transparent 58%),
-    linear-gradient(150deg, #8d2d46 0%, #6f2237 46%, #471324 100%);
+/* Deep forest green block (hero panels, banners) */
+.bg-forest {
+  background: linear-gradient(160deg, #215540 0%, #1d4a38 55%, #163b2c 100%);
 }
 
-/* Deep ink section with oxblood ember */
-.bg-ink-deep {
-  background:
-    radial-gradient(100% 140% at 100% 0%, rgba(122, 38, 58, 0.32) 0%, transparent 55%),
-    linear-gradient(165deg, #2c2a22 0%, #211f19 55%, #17160f 100%);
+/* Deepest green for footer */
+.bg-forest-deep {
+  background: linear-gradient(180deg, #153a2c 0%, #10301f 100%);
 }
 
-/* Warm ember glow for CTA panels */
-.bg-ember {
-  background:
-    radial-gradient(120% 140% at 15% -20%, rgba(212, 146, 40, 0.32) 0%, transparent 55%),
-    linear-gradient(140deg, #7a263a 0%, #5e1c2d 55%, #40101f 100%);
+/* Cream feature panel */
+.bg-parchment {
+  background: #f5f1e6;
 }
 
-/* Subtle dotted texture overlay (use on an absolutely positioned layer) */
-.pattern-dots {
-  background-image: radial-gradient(rgba(253, 246, 232, 0.16) 1.2px, transparent 1.3px);
-  background-size: 20px 20px;
+/* Soft ivory card wash used on tinted sections */
+.bg-ivory {
+  background: #f9f5ea;
 }
 
 /* Hairline dividers used across the editorial layout */
@@ -169,7 +173,7 @@
 
 /* Focus visibility for keyboard users */
 :focus-visible {
-  outline: 2px solid var(--oxblood);
+  outline: 2px solid var(--forest);
   outline-offset: 2px;
 }
 
