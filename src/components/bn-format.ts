@@ -13,9 +13,9 @@ export function bnNumber(value: number | string): string {
 
 /** ISO/Date -> "১৫ জানুয়ারি, ২০২৫" */
 export function bnDate(input: string | Date | null | undefined): string {
-  if (!input) return "—";
+  if (!input) return "-";
   const d = typeof input === "string" ? new Date(input) : input;
-  if (Number.isNaN(d.getTime())) return "—";
+  if (Number.isNaN(d.getTime())) return "-";
   try {
     return new Intl.DateTimeFormat("bn-BD", { day: "numeric", month: "long", year: "numeric" }).format(d);
   } catch {
@@ -25,9 +25,9 @@ export function bnDate(input: string | Date | null | undefined): string {
 
 /** ISO/Date -> "১৫ জানুয়ারি, ২০২৫ · বিকাল ৪:৩০" */
 export function bnDateTime(input: string | Date | null | undefined): string {
-  if (!input) return "—";
+  if (!input) return "-";
   const d = typeof input === "string" ? new Date(input) : input;
-  if (Number.isNaN(d.getTime())) return "—";
+  if (Number.isNaN(d.getTime())) return "-";
   try {
     return new Intl.DateTimeFormat("bn-BD", {
       day: "numeric",

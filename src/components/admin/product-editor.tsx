@@ -1,7 +1,7 @@
 "use client";
 
 // Product editor shared by /admin/products/new and /admin/products/[id].
-// Data is NEVER cleared on errors — server errors surface verbatim as inline
+// Data is NEVER cleared on errors, server errors surface verbatim as inline
 // alert + toast while all entered values stay in place.
 
 import { useEffect, useRef, useState } from "react";
@@ -337,7 +337,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
   useEffect(() => {
     if (productId && productQ.data?.product && !initialized.current) {
       initialized.current = true;
-      slugTouched.current = true; // existing slug is already set — don't auto-suggest
+      slugTouched.current = true; // existing slug is already set, don't auto-suggest
       setForm(formFromProduct(productQ.data.product));
     }
   }, [productId, productQ.data]);
@@ -486,7 +486,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
         rightsAt: new Date().toISOString(),
         rightsChecked: true,
       });
-      toast.success("PDF আপলোড হয়েছে — স্বত্ব নিশ্চিতকরণ রেকর্ড হয়েছে।");
+      toast.success("PDF আপলোড হয়েছে, স্বত্ব নিশ্চিতকরণ রেকর্ড হয়েছে।");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "আপলোড ব্যর্থ হয়েছে।");
     } finally {
@@ -529,7 +529,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
         description={
           productId && productQ.data
             ? `স্লাগ: /${productQ.data.product.slug}`
-            : "বইয়ের সব তথ্য পূরণ করে সংরক্ষণ করুন — খসড়া হিসেবে রাখলে দোকানে দেখাবে না।"
+            : "বইয়ের সব তথ্য পূরণ করে সংরক্ষণ করুন, খসড়া হিসেবে রাখলে দোকানে দেখাবে না।"
         }
         actions={saveButton}
       />
@@ -619,14 +619,14 @@ export function ProductEditor({ productId }: { productId?: string }) {
               onChange={(v) => set("editorPick", v)}
             />
             <p className="text-xs text-muted-foreground sm:col-span-3">
-              শুধু প্রকৃত নির্বাচন — ভুয়া দাবি নয়। চিহ্নগুলো কেবল সত্যিকারের তালিকাভুক্তি বোঝাতে ব্যবহার করুন।
+              শুধু প্রকৃত নির্বাচন, ভুয়া দাবি নয়। চিহ্নগুলো কেবল সত্যিকারের তালিকাভুক্তি বোঝাতে ব্যবহার করুন।
             </p>
           </div>
         </div>
       </Panel>
 
       {/* b) মেটাডেটা */}
-      <Panel title="মেটাডেটা" description="প্রকাশনা সংক্রান্ত তথ্য — ঐচ্ছিক, তবে সঠিকভাবে পূরণ করুন।">
+      <Panel title="মেটাডেটা" description="প্রকাশনা সংক্রান্ত তথ্য, ঐচ্ছিক, তবে সঠিকভাবে পূরণ করুন।">
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="প্রকাশক" htmlFor="f-publisher">
             <Input id="f-publisher" value={form.publisher} onChange={(e) => set("publisher", e.target.value)} className="min-h-[44px]" />
@@ -667,7 +667,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
             <p className="text-sm font-medium">বিভাগ</p>
             {categoriesQ.isLoading ? <Spinner label="বিভাগ লোড হচ্ছে…" /> : null}
             {categoriesQ.data && categoriesQ.data.categories.length === 0 ? (
-              <p className="text-sm text-muted-foreground">কোনো বিভাগ নেই — বিভাগ ও কালেকশন পাতায় তৈরি করুন।</p>
+              <p className="text-sm text-muted-foreground">কোনো বিভাগ নেই, বিভাগ ও কালেকশন পাতায় তৈরি করুন।</p>
             ) : null}
             <div className="scroll-slim max-h-52 space-y-1 overflow-y-auto rounded-md border border-hairline p-2">
               {categoriesQ.data?.categories.map((c) => (
@@ -687,7 +687,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
             <p className="text-sm font-medium">কালেকশন</p>
             {collectionsQ.isLoading ? <Spinner label="কালেকশন লোড হচ্ছে…" /> : null}
             {collectionsQ.data && collectionsQ.data.collections.length === 0 ? (
-              <p className="text-sm text-muted-foreground">কোনো কালেকশন নেই — বিভাগ ও কালেকশন পাতায় তৈরি করুন।</p>
+              <p className="text-sm text-muted-foreground">কোনো কালেকশন নেই, বিভাগ ও কালেকশন পাতায় তৈরি করুন।</p>
             ) : null}
             <div className="scroll-slim max-h-52 space-y-1 overflow-y-auto rounded-md border border-hairline p-2">
               {collectionsQ.data?.collections.map((c) => (
@@ -769,7 +769,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
               </div>
               <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <ImageIcon className="size-3.5" aria-hidden />
-                JPG/PNG/WebP/AVIF — সর্বোচ্চ 8MB। প্রচ্ছদ ২:৩ অনুপাতে দেখানো হয়।
+                JPG/PNG/WebP/AVIF, সর্বোচ্চ 8MB। প্রচ্ছদ ২:৩ অনুপাতে দেখানো হয়।
               </p>
             </div>
           </div>
@@ -779,7 +779,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
       {/* e) ফরম্যাট/ভ্যারিয়েন্ট */}
       <Panel
         title="ফরম্যাট / ভ্যারিয়েন্ট"
-        description="প্রতিটি ফরম্যাট একবারই যোগ করা যায় — মূল্য, স্টক ও ডিজিটাল ফাইল এখানে ঠিক করুন।"
+        description="প্রতিটি ফরম্যাট একবারই যোগ করা যায়, মূল্য, স্টক ও ডিজিটাল ফাইল এখানে ঠিক করুন।"
       >
         <div className="space-y-4">
           {publishBlockers.length > 0 ? (
@@ -787,14 +787,14 @@ export function ProductEditor({ productId }: { productId?: string }) {
               <AlertTriangle className="size-4" aria-hidden />
               <AlertTitle>প্রকাশের শর্ত পূরণ হয়নি</AlertTitle>
               <AlertDescription>
-                {publishBlockers.join(", ")} — প্রকাশ করতে হলে প্রতিটি সক্রিয় ডিজিটাল ভ্যারিয়েন্টে PDF ফাইল ও স্বত্ব নিশ্চিতকরণ আবশ্যক।
+                {publishBlockers.join(", ")}, প্রকাশ করতে হলে প্রতিটি সক্রিয় ডিজিটাল ভ্যারিয়েন্টে PDF ফাইল ও স্বত্ব নিশ্চিতকরণ আবশ্যক।
               </AlertDescription>
             </Alert>
           ) : null}
 
           {form.variants.length === 0 ? (
             <p className="rounded-md border border-dashed border-border bg-muted/40 px-4 py-6 text-center text-sm text-muted-foreground">
-              কোনো ভ্যারিয়েন্ট যোগ করা হয়নি — নিচের বোতাম থেকে ফরম্যাট যোগ করুন।
+              কোনো ভ্যারিয়েন্ট যোগ করা হয়নি, নিচের বোতাম থেকে ফরম্যাট যোগ করুন।
             </p>
           ) : null}
 
@@ -837,7 +837,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
                     className="min-h-[44px]"
                   />
                 </Field>
-                <Field label="তুলনামূলক মূল্য (৳)" htmlFor={`c-${v.key}`} hint="ঐচ্ছিক — ছাড় দেখানোর জন্য, বিক্রয়মূল্যের বেশি হতে হবে।">
+                <Field label="তুলনামূলক মূল্য (৳)" htmlFor={`c-${v.key}`} hint="ঐচ্ছিক, ছাড় দেখানোর জন্য, বিক্রয়মূল্যের বেশি হতে হবে।">
                   <Input
                     id={`c-${v.key}`}
                     type="number"
@@ -979,7 +979,7 @@ export function ProductEditor({ productId }: { productId?: string }) {
       </Panel>
 
       {/* f) SEO */}
-      <Panel title="SEO" description="সার্চ ইঞ্জিনের জন্য — খালি রাখলে নাম ও বিবরণ ব্যবহৃত হবে।">
+      <Panel title="SEO" description="সার্চ ইঞ্জিনের জন্য, খালি রাখলে নাম ও বিবরণ ব্যবহৃত হবে।">
         <div className="space-y-4">
           <Field label="SEO শিরোনাম" htmlFor="f-seoTitle">
             <Input id="f-seoTitle" value={form.seoTitle} onChange={(e) => set("seoTitle", e.target.value)} className="min-h-[44px]" />

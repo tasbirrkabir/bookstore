@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
  * Mock gateway → server callback. Simulates what a real gateway's server-to-server
  * verification endpoint does. The payload must carry an HMAC signature computed with
  * the gateway secret; a forged browser request without the signature is rejected.
- * DEV/TEST ONLY — the mock provider refuses to run in production.
+ * DEV/TEST ONLY, the mock provider refuses to run in production.
  */
 export async function POST(req: Request) {
   const rl = rateLimit(`mock-callback:${clientIp(req)}`, 30, 60_000);

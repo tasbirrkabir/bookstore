@@ -17,7 +17,7 @@ export type PaymentProviderName = "disabled" | "mock";
 export function getPaymentProvider(): PaymentProviderName {
   const p = (process.env.PAYMENT_PROVIDER ?? "disabled") as PaymentProviderName;
   if (p === "mock" && process.env.NODE_ENV === "production" && process.env.ALLOW_MOCK_PAYMENTS !== "yes-i-know-this-is-unsafe") {
-    // Hard production guard — a mock gateway must never run in production.
+    // Hard production guard, a mock gateway must never run in production.
     console.error("[payments] PAYMENT_PROVIDER=mock refused in production. Falling back to disabled.");
     return "disabled";
   }
@@ -104,7 +104,7 @@ export async function verifyAndMarkPaid(payload: {
   if (!payment) return { ok: false, error: "পেমেন্ট রেকর্ড পাওয়া যায়নি।", code: "NOT_FOUND" };
   const order = payment.order;
 
-  // 3. Idempotency — already verified payments short-circuit safely.
+  // 3. Idempotency, already verified payments short-circuit safely.
   if (payment.status === "paid" && payment.verifiedAt) {
     return { ok: true, orderNumber: order.orderNumber };
   }
@@ -168,7 +168,7 @@ export async function verifyAndMarkPaid(payload: {
     });
   } catch (e) {
     if (e instanceof Error && e.message === "STOCK_COMMIT_FAILED") {
-      // Keep payment paid but flag for reconciliation — money is real at this point.
+      // Keep payment paid but flag for reconciliation, money is real at this point.
       await db.order.update({ where: { id: order.id }, data: { status: "processing" } });
       await logAudit({ actorEmail: "system", action: "stock_reconciliation_needed", targetType: "order", targetId: order.id, detail: "Payment verified but stock commit failed" });
       return { ok: true, orderNumber: order.orderNumber };

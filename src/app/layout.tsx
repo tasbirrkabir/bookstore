@@ -32,15 +32,15 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "পাতা — বইয়ের নিজস্ব ঠিকানা",
+    default: "পাতা, বইয়ের নিজস্ব ঠিকানা",
     template: "%s | পাতা",
   },
   description:
-    "পাতা — হার্ড কপি, PDF/ই-বুক ও বান্ডেল ফরম্যাটে বাছাই করা বই। সারা বাংলাদেশে ডেলিভারি, নিরাপদ চেকআউট, যাচাইকৃত পেমেন্টের পর তাৎক্ষণিক ডিজিটাল অ্যাক্সেস।",
+    "পাতা, হার্ড কপি, PDF/ই-বুক ও বান্ডেল ফরম্যাটে বাছাই করা বই। সারা বাংলাদেশে ডেলিভারি, নিরাপদ চেকআউট, যাচাইকৃত পেমেন্টের পর তাৎক্ষণিক ডিজিটাল অ্যাক্সেস।",
   keywords: ["বই", "bookstore", "বাংলা বই", "ebook", "PDF", "বাংলাদেশ", "পাতা"],
   openGraph: {
-    title: "পাতা — বইয়ের নিজস্ব ঠিকানা",
-    description: "হার্ড কপি, PDF/ই-বুক ও বান্ডেল — এক বই, আপনার পছন্দের ফরম্যাটে।",
+    title: "পাতা, বইয়ের নিজস্ব ঠিকানা",
+    description: "হার্ড কপি, PDF/ই-বুক ও বান্ডেল, এক বই, আপনার পছন্দের ফরম্যাটে।",
     url: siteUrl,
     siteName: "পাতা",
     type: "website",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f7f4ee",
+  themeColor: "#f3ead7",
   width: "device-width",
   initialScale: 1,
 };

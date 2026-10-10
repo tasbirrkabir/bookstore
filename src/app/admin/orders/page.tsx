@@ -82,7 +82,7 @@ function OrdersView({ initialStatus, initialPayment }: { initialStatus: string; 
 
   return (
     <div className="space-y-5">
-      <PageHeader title="অর্ডার" description="সব অর্ডার — ফিল্টার করে বিস্তারিত দেখুন।" />
+      <PageHeader title="অর্ডার" description="সব অর্ডার, ফিল্টার করে বিস্তারিত দেখুন।" />
 
       <div className="grid gap-3 rounded-lg border border-hairline bg-card p-3 sm:grid-cols-2 sm:p-4 lg:grid-cols-3">
         <div className="space-y-1.5 lg:col-span-1">

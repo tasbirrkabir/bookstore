@@ -45,7 +45,7 @@ export function LoginForm({ next }: { next: string }) {
       }
       setErrors({ form: data.error ?? "লগইন করা যায়নি। আবার চেষ্টা করুন।" });
     } catch {
-      setErrors({ form: "নেটওয়ার্ক সমস্যা — আবার চেষ্টা করুন।" });
+      setErrors({ form: "নেটওয়ার্ক সমস্যা, আবার চেষ্টা করুন।" });
     } finally {
       setLoading(false);
     }

@@ -15,7 +15,7 @@ export default async function RegisterPage({
   return <RegisterForm next={safeNext(sp.next)} />;
 }
 
-/** Only allow same-site relative paths — blocks open redirects. */
+/** Only allow same-site relative paths, blocks open redirects. */
 function safeNext(raw: string | string[] | undefined): string {
   if (typeof raw === "string" && raw.startsWith("/") && !raw.startsWith("//") && !raw.includes("\\")) return raw;
   return "/account";

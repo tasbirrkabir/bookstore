@@ -1,7 +1,7 @@
 "use client";
 
 // Order detail: items + entitlements (+ comp grant), customer/shipping snapshot,
-// private admin note, payments, event timeline — with an actions column for
+// private admin note, payments, event timeline, with an actions column for
 // status transitions and payment actions.
 
 import { useState } from "react";
@@ -132,7 +132,7 @@ function CompDialog({ itemId, onDone }: { itemId: string; onDone: () => void }) 
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>কম্প গ্রান্ট — ডিজিটাল অ্যাক্সেস</DialogTitle>
+          <DialogTitle>কম্প গ্রান্ট, ডিজিটাল অ্যাক্সেস</DialogTitle>
           <DialogDescription>
             যাচাইকৃত পেমেন্ট ছাড়া ডিজিটাল অ্যাক্সেস মঞ্জুর করছেন। কারণ অডিট লগে সংরক্ষিত হবে।
           </DialogDescription>
@@ -144,7 +144,7 @@ function CompDialog({ itemId, onDone }: { itemId: string; onDone: () => void }) 
             rows={3}
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            placeholder="যেমন: পেমেন্ট সফল হয়েও গ্রান্ট হয়নি — রসিদ #XYZ যাচাইকৃত"
+            placeholder="যেমন: পেমেন্ট সফল হয়েও গ্রান্ট হয়নি, রসিদ #XYZ যাচাইকৃত"
           />
         </div>
         <DialogFooter>
@@ -169,7 +169,7 @@ function CompDialog({ itemId, onDone }: { itemId: string; onDone: () => void }) 
 
 function StatusPanel({ order, onDone }: { order: AdminOrderDetail; onDone: () => void }) {
   const targets = ALLOWED_TRANSITIONS[order.status] ?? [];
-  // Parent remounts this panel with key={order.status} — state resets naturally.
+  // Parent remounts this panel with key={order.status}, state resets naturally.
   const [toStatus, setToStatus] = useState("");
   const [note, setNote] = useState("");
   const [trackingId, setTrackingId] = useState(order.trackingId ?? "");
@@ -468,7 +468,7 @@ export default function AdminOrderDetailPage() {
 
           <Panel
             title="প্রাইভেট অ্যাডমিন নোট"
-            description="শুধু অ্যাডমিন দেখবে — গ্রাহক কখনো নয়।"
+            description="শুধু অ্যাডমিন দেখবে, গ্রাহক কখনো নয়।"
           >
             <div className="space-y-3">
               <Textarea
@@ -511,14 +511,14 @@ export default function AdminOrderDetailPage() {
                     {order.payments.map((p) => (
                       <TableRow key={p.id}>
                         <TableCell className="font-medium">{p.provider}</TableCell>
-                        <TableCell>{p.method ?? "—"}</TableCell>
-                        <TableCell className="font-mono text-xs">{p.providerTxnId ?? "—"}</TableCell>
+                        <TableCell>{p.method ?? "-"}</TableCell>
+                        <TableCell className="font-mono text-xs">{p.providerTxnId ?? "-"}</TableCell>
                         <TableCell className="text-right tabular-nums">{formatBdt(p.amountMinor)}</TableCell>
                         <TableCell>
                           <ToneBadge tone={PAYMENT_RECORD_TONE[p.status] ?? "gray"}>{p.status}</ToneBadge>
                         </TableCell>
                         <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
-                          {p.verifiedAt ? fmtDateTime(p.verifiedAt) : `— (${fmtDate(p.createdAt)})`}
+                          {p.verifiedAt ? fmtDateTime(p.verifiedAt) : `- (${fmtDate(p.createdAt)})`}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -559,7 +559,7 @@ export default function AdminOrderDetailPage() {
           </Panel>
         </div>
 
-        {/* Right column — actions */}
+        {/* Right column, actions */}
         <div className="space-y-5">
           <Panel title="অ্যাকশন">
             <div className="space-y-4">
@@ -600,9 +600,9 @@ export default function AdminOrderDetailPage() {
 
           <Panel title="নির্দেশিকা">
             <ul className={cn("space-y-2 text-xs text-muted-foreground")}>
-              <li>· স্ট্যাটাস পরিবর্তনের সম্ভাব্য পথ সার্ভারে নির্ধারিত — শুধু অনুমোদিত ট্রানজিশন দেখানো হচ্ছে।</li>
+              <li>· স্ট্যাটাস পরিবর্তনের সম্ভাব্য পথ সার্ভারে নির্ধারিত, শুধু অনুমোদিত ট্রানজিশন দেখানো হচ্ছে।</li>
               <li>· বাতিল/ফেরতে গেলে শারীরিক স্টক স্বয়ংক্রিয়ভাবে ফেরত যায়।</li>
-              <li>· কম্প গ্রান্ট শুধু যাচাইকৃত প্রয়োজনে — প্রতিটি গ্রান্ট অডিট লগে থাকে।</li>
+              <li>· কম্প গ্রান্ট শুধু যাচাইকৃত প্রয়োজনে, প্রতিটি গ্রান্ট অডিট লগে থাকে।</li>
             </ul>
           </Panel>
         </div>

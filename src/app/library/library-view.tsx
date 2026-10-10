@@ -44,7 +44,7 @@ export function LibraryView({ items, userName }: { items: LibraryItem[]; userNam
       <header className="hairline-b pb-5">
         <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">ডিজিটাল লাইব্রেরি</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          স্বাগতম, {userName} — আপনার কেনা PDF/ই-বুকগুলো এখানে। প্রতিটি ফাইল পেমেন্ট যাচাইয়ের পর থেকে ডাউনলোডযোগ্য।
+          স্বাগতম, {userName}, আপনার কেনা PDF/ই-বুকগুলো এখানে। প্রতিটি ফাইল পেমেন্ট যাচাইয়ের পর থেকে ডাউনলোডযোগ্য।
         </p>
       </header>
 
@@ -55,7 +55,7 @@ export function LibraryView({ items, userName }: { items: LibraryItem[]; userNam
           </div>
           <h2 className="mt-4 font-display text-2xl font-semibold">লাইব্রেরি এখনো খালি</h2>
           <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
-            ডিজিটাল বই কিনলে এখানে দেখা যাবে — পেমেন্ট যাচাইয়ের পরই ডাউনলোড চালু হয়ে যাবে।
+            ডিজিটাল বই কিনলে এখানে দেখা যাবে, পেমেন্ট যাচাইয়ের পরই ডাউনলোড চালু হয়ে যাবে।
           </p>
           <Button asChild size="lg" className="mt-6 h-11">
             <Link href="/shop?format=digital">ডিজিটাল বই দেখুন</Link>
@@ -131,7 +131,7 @@ export function LibraryView({ items, userName }: { items: LibraryItem[]; userNam
       )}
 
       <p className="mt-8 text-xs leading-5 text-muted-foreground">
-        ডাউনলোড ফাইলগুলো শুধুমাত্র আপনার জন্য — অন্যকে শেয়ার করা শর্তাবলির লঙ্ঘন। বিস্তারিত:{" "}
+        ডাউনলোড ফাইলগুলো শুধুমাত্র আপনার জন্য, অন্যকে শেয়ার করা শর্তাবলির লঙ্ঘন। বিস্তারিত:{" "}
         <Link href="/policies/terms" className="underline underline-offset-4">শর্তাবলি</Link>।
       </p>
     </div>

@@ -22,7 +22,7 @@ export default function AppError({
         কিছু একটা ভুল হয়েছে
       </h1>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
-        অপ্রত্যাশিত একটি সমস্যায় পাতাটি দেখানো গেল না। আবার চেষ্টা করুন — সমস্যা থেকে গেলে কিছুক্ষণ
+        অপ্রত্যাশিত একটি সমস্যায় পাতাটি দেখানো গেল না। আবার চেষ্টা করুন, সমস্যা থেকে গেলে কিছুক্ষণ
         পরে আবার আসবেন।
       </p>
       <Button onClick={reset} size="lg" className="mt-7 h-12 px-7">

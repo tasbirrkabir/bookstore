@@ -75,7 +75,7 @@ export default async function OrderPage({
 
       {token ? (
         <div role="status" className="mb-6 rounded-md border border-hairline bg-sage-soft/70 px-4 py-3 text-sm leading-6 text-accent-foreground">
-          <span className="font-semibold">এই লিঙ্কটি সংরক্ষণ করুন — অর্ডার দেখতে এটি প্রয়োজন হবে।</span>{" "}
+          <span className="font-semibold">এই লিঙ্কটি সংরক্ষণ করুন, অর্ডার দেখতে এটি প্রয়োজন হবে।</span>{" "}
           ইমেইল/মোবাইল দিয়ে <a href="/track" className="font-medium underline underline-offset-4">/track</a> থেকেও নতুন লিঙ্ক নেওয়া যাবে।
         </div>
       ) : null}
@@ -234,7 +234,7 @@ export default async function OrderPage({
                 {order.shippingAddress}
                 {order.shippingArea ? `, ${order.shippingArea}` : ""}
                 {order.shippingDistrict ? `, ${order.shippingDistrict}` : ""}
-                {order.shippingPostcode ? ` — ${order.shippingPostcode}` : ""}
+                {order.shippingPostcode ? `, ${order.shippingPostcode}` : ""}
               </dd>
             </div>
             {order.shippingNote ? (

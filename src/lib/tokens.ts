@@ -5,7 +5,7 @@ export function randomToken(bytes = 32): string {
   return crypto.randomBytes(bytes).toString("base64url");
 }
 
-/** SHA-256 hex hash — used so guest capability tokens are never stored in plaintext. */
+/** SHA-256 hex hash, used so guest capability tokens are never stored in plaintext. */
 export function sha256(value: string): string {
   return crypto.createHash("sha256").update(value, "utf8").digest("hex");
 }
@@ -22,7 +22,7 @@ export function safeEqual(a: string, b: string): boolean {
   return crypto.timingSafeEqual(ab, bb);
 }
 
-/** HMAC-SHA256 signature (hex) — used by the mock payment gateway callback. */
+/** HMAC-SHA256 signature (hex), used by the mock payment gateway callback. */
 export function hmacSign(payload: string, secret: string): string {
   return crypto.createHmac("sha256", secret).update(payload, "utf8").digest("hex");
 }

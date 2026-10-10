@@ -65,7 +65,7 @@ export function CartView() {
         toast.error(data.error ?? "কার্ট লোড করা যায়নি। পেজটি রিফ্রেশ করুন।");
       }
     } catch {
-      toast.error("নেটওয়ার্ক সমস্যা — কার্ট লোড করা যায়নি।");
+      toast.error("নেটওয়ার্ক সমস্যা, কার্ট লোড করা যায়নি।");
     } finally {
       setLoading(false);
     }
@@ -94,7 +94,7 @@ export function CartView() {
         toast.error(data.error ?? "পরিমাণ পরিবর্তন করা যায়নি।");
       }
     } catch {
-      toast.error("নেটওয়ার্ক সমস্যা — পরিমাণ পরিবর্তন হয়নি।");
+      toast.error("নেটওয়ার্ক সমস্যা, পরিমাণ পরিবর্তন হয়নি।");
     } finally {
       setBusyLine(null);
     }
@@ -118,7 +118,7 @@ export function CartView() {
         toast.error(data.error ?? "আইটেম সরানো যায়নি।");
       }
     } catch {
-      toast.error("নেটওয়ার্ক সমস্যা — আইটেম সরানো হয়নি।");
+      toast.error("নেটওয়ার্ক সমস্যা, আইটেম সরানো হয়নি।");
     } finally {
       setBusyLine(null);
     }
@@ -143,7 +143,7 @@ export function CartView() {
         toast.error(data.error ?? "কুপন প্রয়োগ করা যায়নি।");
       }
     } catch {
-      toast.error("নেটওয়ার্ক সমস্যা — কুপন প্রয়োগ হয়নি।");
+      toast.error("নেটওয়ার্ক সমস্যা, কুপন প্রয়োগ হয়নি।");
     } finally {
       setCouponBusy(false);
     }
@@ -174,7 +174,7 @@ export function CartView() {
         <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">আপনার কার্ট</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
           {loading ? "কার্ট লোড হচ্ছে…" : hasLines ? (
-            <>মোট {bnNumber(quote?.itemCount ?? 0)}টি আইটেম — মূল্য ও স্টক প্রতিবার সর্বশেষ যাচাই করা হয়।</>
+            <>মোট {bnNumber(quote?.itemCount ?? 0)}টি আইটেম, মূল্য ও স্টক প্রতিবার সর্বশেষ যাচাই করা হয়।</>
           ) : (
             "কেনাকাটা শুরু করতে নিচের বাটনে চাপ দিন।"
           )}
@@ -194,7 +194,7 @@ export function CartView() {
                 <AlertTriangle className="text-warning" aria-hidden />
                 <AlertTitle>কিছু আইটেম ঠিক করা প্রয়োজন</AlertTitle>
                 <AlertDescription>
-                  নিচের চিহ্নিত আইটেমগুলো সরিয়ে ফেলুন বা পরিমাণ ঠিক করুন — এগুলো ঠিক না হওয়া পর্যন্ত চেকআউট করা যাবে না।
+                  নিচের চিহ্নিত আইটেমগুলো সরিয়ে ফেলুন বা পরিমাণ ঠিক করুন, এগুলো ঠিক না হওয়া পর্যন্ত চেকআউট করা যাবে না।
                 </AlertDescription>
               </Alert>
             ) : null}
@@ -240,7 +240,7 @@ export function CartView() {
                     <p className="mt-2 text-xs font-medium text-success">{quote.couponMessage}</p>
                   ) : null}
                   {quote.couponError ? (
-                    <p className="mt-2 text-xs font-medium text-destructive">{quote.couponError} — কুপনটি সরিয়ে অন্যটি চেষ্টা করুন।</p>
+                    <p className="mt-2 text-xs font-medium text-destructive">{quote.couponError}, কুপনটি সরিয়ে অন্যটি চেষ্টা করুন।</p>
                   ) : null}
                 </div>
               ) : (
@@ -313,7 +313,7 @@ export function CartView() {
                           <SelectContent>
                             {quote.shippingZones.map((z) => (
                               <SelectItem key={z.id} value={z.id}>
-                                {z.label} — {formatBdt(z.feeMinor)}
+                                {z.label}, {formatBdt(z.feeMinor)}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -339,7 +339,7 @@ export function CartView() {
                 </div>
               </dl>
               {quote.hasPhysical && !shippingKnown ? (
-                <p className="mt-2 text-xs text-muted-foreground">ডেলিভারি ফি চেকআউটে হিসাব হবে — জোন নির্বাচন করে আনুমানিক ফি দেখতে পারেন।</p>
+                <p className="mt-2 text-xs text-muted-foreground">ডেলিভারি ফি চেকআউটে হিসাব হবে, জোন নির্বাচন করে আনুমানিক ফি দেখতে পারেন।</p>
               ) : null}
             </section>
 
@@ -349,7 +349,7 @@ export function CartView() {
                 <CreditCard className="text-sage" aria-hidden />
                 <AlertTitle>অনলাইন পেমেন্ট প্রয়োজন</AlertTitle>
                 <AlertDescription>
-                  কার্টে ডিজিটাল আইটেম আছে — অর্ডার নিশ্চিত করতে অনলাইন পেমেন্ট প্রয়োজন। ক্যাশ অন ডেলিভারি শুধু শারীরিক বইয়ের অর্ডারে প্রযোজ্য।
+                  কার্টে ডিজিটাল আইটেম আছে, অর্ডার নিশ্চিত করতে অনলাইন পেমেন্ট প্রয়োজন। ক্যাশ অন ডেলিভারি শুধু শারীরিক বইয়ের অর্ডারে প্রযোজ্য।
                 </AlertDescription>
               </Alert>
             ) : null}
@@ -378,7 +378,7 @@ export function CartView() {
           </div>
           {anyIssue ? (
             <p id="checkout-blocked-reason" role="status" className="mx-auto max-w-6xl px-4 pb-2 text-xs text-warning sm:px-6">
-              কার্টে সমস্যাযুক্ত আইটেম আছে — সেগুলো সরানো বা ঠিক করার পর চেকআউট চালু হবে।
+              কার্টে সমস্যাযুক্ত আইটেম আছে, সেগুলো সরানো বা ঠিক করার পর চেকআউট চালু হবে।
             </p>
           ) : null}
         </div>
@@ -457,7 +457,7 @@ function CartLineRow({
                   variant="outline"
                   size="icon"
                   className="size-11"
-                  aria-label={`${line.title} — পরিমাণ কমান`}
+                  aria-label={`${line.title}, পরিমাণ কমান`}
                   disabled={disabled || busy || line.quantity <= 1}
                   onClick={() => onQty(line.quantity - 1)}
                 >
@@ -474,7 +474,7 @@ function CartLineRow({
                   variant="outline"
                   size="icon"
                   className="size-11"
-                  aria-label={`${line.title} — পরিমাণ বাড়ান`}
+                  aria-label={`${line.title}, পরিমাণ বাড়ান`}
                   disabled={disabled || busy || line.quantity >= maxQty}
                   onClick={() => onQty(line.quantity + 1)}
                 >
@@ -489,7 +489,7 @@ function CartLineRow({
               className="h-11 gap-1.5 px-3 text-muted-foreground hover:text-destructive"
               disabled={disabled || busy}
               onClick={onRemove}
-              aria-label={`${line.title} — কার্ট থেকে সরান`}
+              aria-label={`${line.title}, কার্ট থেকে সরান`}
             >
               {busy ? <Loader2 className="size-4 animate-spin" aria-hidden /> : <Trash2 className="size-4" aria-hidden />}
               সরান
@@ -533,7 +533,7 @@ function EmptyCart() {
       </div>
       <h2 className="mt-4 font-display text-2xl font-semibold">কার্ট এখনো খালি</h2>
       <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
-        পছন্দের বইগুলো কার্টে যোগ করুন — হার্ড কপি, PDF/ই-বুক বা বান্ডেল, আপনার পছন্দমতো ফরম্যাটে।
+        পছন্দের বইগুলো কার্টে যোগ করুন, হার্ড কপি, PDF/ই-বুক বা বান্ডেল, আপনার পছন্দমতো ফরম্যাটে।
       </p>
       <Button asChild size="lg" className="mt-6 h-11">
         <Link href="/shop">বই খুঁজে দেখুন</Link>

@@ -72,7 +72,7 @@ export async function getOrCreateCart(): Promise<{ id: string; created: boolean 
   return { id: created.id, created: true };
 }
 
-/** Build live cart lines from DB — prices/stock always fresh from the database. */
+/** Build live cart lines from DB, prices/stock always fresh from the database. */
 export async function getCartLines(cartId: string | null): Promise<CartLine[]> {
   if (!cartId) return [];
   const cart = await db.cart.findUnique({
@@ -141,7 +141,7 @@ export async function getCartLines(cartId: string | null): Promise<CartLine[]> {
 }
 
 /**
- * Server-side cart quote. The browser can NEVER set totals — everything here is
+ * Server-side cart quote. The browser can NEVER set totals, everything here is
  * recomputed from the database (prices, stock, coupon, shipping).
  */
 export async function quoteCart(cartId: string | null, opts?: { shippingZone?: string | null }): Promise<CartQuote> {
@@ -225,7 +225,7 @@ export async function addToCart(variantId: string, quantity: number): Promise<{ 
   const existing = await db.cartItem.findUnique({ where: { cartId_variantId: { cartId: id, variantId } } });
   if (existing) {
     if (variant.formatType === "digital") {
-      return { ok: true }; // digital already in cart — idempotent add
+      return { ok: true }; // digital already in cart, idempotent add
     }
     const maxQty = variant.stockOnHand ?? 0;
     const nextQty = Math.min(existing.quantity + qty, maxQty, 99);

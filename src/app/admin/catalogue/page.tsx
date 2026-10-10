@@ -94,7 +94,7 @@ function DeleteCell({
       onDone();
     },
     onError: (e: Error) => {
-      // Server blocks deletes that would orphan products — surface verbatim.
+      // Server blocks deletes that would orphan products, surface verbatim.
       toast.error(e.message);
     },
   });
@@ -453,7 +453,7 @@ export default function AdminCataloguePage() {
     <div className="space-y-5">
       <PageHeader
         title="বিভাগ ও কালেকশন"
-        description="দোকানের ব্রাউজিং কাঠামো — বিভাগ ও কিউরেটেড কালেকশন।"
+        description="দোকানের ব্রাউজিং কাঠামো, বিভাগ ও কিউরেটেড কালেকশন।"
         actions={
           <span className="hidden items-center gap-1.5 text-xs text-muted-foreground sm:flex">
             <AlertTriangle className="size-3.5" aria-hidden />

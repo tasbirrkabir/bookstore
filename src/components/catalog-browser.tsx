@@ -313,7 +313,7 @@ export function CatalogBrowser({
   if (current.priceMin || current.priceMax) {
     const minT = current.priceMin ? formatBdt(Number(current.priceMin) * 100) : null;
     const maxT = current.priceMax ? formatBdt(Number(current.priceMax) * 100) : null;
-    const label = minT && maxT ? `${minT} – ${maxT}` : minT ? `${minT} থেকে` : `${maxT} পর্যন্ত`;
+    const label = minT && maxT ? `${minT} - ${maxT}` : minT ? `${minT} থেকে` : `${maxT} পর্যন্ত`;
     chips.push({
       label,
       href: hrefFor(basePath, searchParams, { price_min: null, price_max: null }),
@@ -493,7 +493,7 @@ export function CatalogBrowser({
               <h2 className="mt-4 font-display text-2xl font-semibold">কোনো বই মেলেনি</h2>
               <p className="mx-auto mt-1.5 max-w-sm text-sm leading-relaxed text-muted-foreground">
                 ফিল্টার বদলে দেখুন
-                {current.q ? " — অন্যভাবে বানিয়ে খুঁজেও দেখতে পারেন" : ""}। নতুন বই নিয়মিত যোগ করা
+                {current.q ? ", অন্যভাবে বানিয়ে খুঁজেও দেখতে পারেন" : ""}। নতুন বই নিয়মিত যোগ করা
                 হয়।
               </p>
               <Button asChild variant="outline" className="mt-5 h-11 bg-card px-6">

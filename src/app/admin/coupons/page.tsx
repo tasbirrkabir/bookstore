@@ -115,7 +115,7 @@ function DeleteButton({ coupon, onDone }: { coupon: AdminCoupon; onDone: () => v
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>কুপন মুছবেন?</AlertDialogTitle>
-          <AlertDialogDescription>“{coupon.code}” স্থায়ীভাবে মুছে যাবে — অর্ডারে ব্যবহৃত হলেও।</AlertDialogDescription>
+          <AlertDialogDescription>“{coupon.code}” স্থায়ীভাবে মুছে যাবে, অর্ডারে ব্যবহৃত হলেও।</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="min-h-[44px]">বাতিল</AlertDialogCancel>
@@ -195,7 +195,7 @@ export default function AdminCouponsPage() {
     <div className="space-y-5">
       <PageHeader
         title="কুপন"
-        description="ছাড়ের কোড — শর্ত, মেয়াদ ও ব্যবহারসীমা নিয়ন্ত্রণ করুন।"
+        description="ছাড়ের কোড, শর্ত, মেয়াদ ও ব্যবহারসীমা নিয়ন্ত্রণ করুন।"
         actions={
           <Button
             className="min-h-[44px]"
@@ -253,7 +253,7 @@ export default function AdminCouponsPage() {
                             ) : null}
                           </span>
                         </TableCell>
-                        <TableCell className="tabular-nums">{c.minSpendMinor ? formatBdt(c.minSpendMinor) : "—"}</TableCell>
+                        <TableCell className="tabular-nums">{c.minSpendMinor ? formatBdt(c.minSpendMinor) : "-"}</TableCell>
                         <TableCell className="text-sm">{c.appliesToFormat ? formatLabel(c.appliesToFormat) : "সব ফরম্যাট"}</TableCell>
                         <TableCell className="whitespace-nowrap text-xs text-muted-foreground">
                           {c.startsAt || c.endsAt ? (
@@ -299,7 +299,7 @@ export default function AdminCouponsPage() {
         <DialogContent className="max-h-[90dvh] overflow-y-auto sm:max-w-xl">
           <DialogHeader>
             <DialogTitle>{form.id ? "কুপন সম্পাদনা" : "নতুন কুপন"}</DialogTitle>
-            <DialogDescription>কোড A–Z, 0-9 দিয়ে ৩–২৪ অক্ষরের হতে হবে।</DialogDescription>
+            <DialogDescription>কোড A-Z, 0-9 দিয়ে ৩-২৪ অক্ষরের হতে হবে।</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -401,7 +401,7 @@ export default function AdminCouponsPage() {
                   value={form.usageLimit}
                   onChange={(e) => setForm((f) => ({ ...f, usageLimit: e.target.value }))}
                   className="min-h-[44px]"
-                  placeholder="সীমাহীন — খালি রাখুন"
+                  placeholder="সীমাহীন, খালি রাখুন"
                 />
               </div>
             </div>

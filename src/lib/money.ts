@@ -1,4 +1,4 @@
-// Money helpers — ALL authoritative amounts are integer minor units (poisha, 1 BDT = 100 poisha).
+// Money helpers, ALL authoritative amounts are integer minor units (poisha, 1 BDT = 100 poisha).
 // Never use floating point for totals.
 
 export const CURRENCY = "BDT";

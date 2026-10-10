@@ -1,7 +1,7 @@
 "use client";
 
 // Store settings: branding, announcement, delivery (poisha↔taka conversion),
-// download defaults, misc — plus read-only system status chips.
+// download defaults, misc, plus read-only system status chips.
 // The form initializes once from fetched settings and never resets on errors.
 
 import { useState } from "react";
@@ -233,7 +233,7 @@ function SettingsFormView({
         </div>
       </Panel>
 
-      <Panel title="ডেলিভারি" description="চার্জ টাকায় দিন — সিস্টেমে পয়সায় (poisha) সংরক্ষিত হয়।">
+      <Panel title="ডেলিভারি" description="চার্জ টাকায় দিন, সিস্টেমে পয়সায় (poisha) সংরক্ষিত হয়।">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5">
             <Label htmlFor="s-in">ঢাকার ভিতরে চার্জ (৳)</Label>
@@ -245,14 +245,14 @@ function SettingsFormView({
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="s-free">ফ্রি শিপিংয়ের সীমা (৳)</Label>
-            <Input id="s-free" type="number" inputMode="decimal" min="0" step="0.01" value={form.freeShippingThreshold} onChange={(e) => set("freeShippingThreshold", e.target.value)} className="min-h-[44px]" placeholder="বন্ধ — খালি রাখুন" />
+            <Input id="s-free" type="number" inputMode="decimal" min="0" step="0.01" value={form.freeShippingThreshold} onChange={(e) => set("freeShippingThreshold", e.target.value)} className="min-h-[44px]" placeholder="বন্ধ, খালি রাখুন" />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="s-estIn">সময় অনুমান — ঢাকার ভিতরে</Label>
+            <Label htmlFor="s-estIn">সময় অনুমান, ঢাকার ভিতরে</Label>
             <Input id="s-estIn" value={form.deliveryEstimateInside} onChange={(e) => set("deliveryEstimateInside", e.target.value)} className="min-h-[44px]" />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="s-estOut">সময় অনুমান — ঢাকার বাইরে</Label>
+            <Label htmlFor="s-estOut">সময় অনুমান, ঢাকার বাইরে</Label>
             <Input id="s-estOut" value={form.deliveryEstimateOutside} onChange={(e) => set("deliveryEstimateOutside", e.target.value)} className="min-h-[44px]" />
           </div>
         </div>

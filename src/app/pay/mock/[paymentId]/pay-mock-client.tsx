@@ -85,10 +85,10 @@ export function PayMockClient({
       }
 
       // Simulated failure: the verifier rejects the callback and marks the payment
-      // failed server-side — the API answers 400 by design.
+      // failed server-side, the API answers 400 by design.
       setPhase("failed");
     } catch {
-      toast.error("নেটওয়ার্ক সমস্যা — গেটওয়ে অনুরোধ পাঠানো যায়নি।");
+      toast.error("নেটওয়ার্ক সমস্যা, গেটওয়ে অনুরোধ পাঠানো যায়নি।");
       setPhase("idle");
     }
   }
@@ -99,11 +99,11 @@ export function PayMockClient({
     <div className="mx-auto w-full max-w-lg px-4 py-10 sm:py-14">
       <ToastHost />
 
-      {/* Simulated-gateway banner — must never look like the real store */}
+      {/* Simulated-gateway banner, must never look like the real store */}
       <div className="mb-5 flex items-start gap-2.5 rounded-md border border-warning/50 bg-warning/10 px-4 py-3">
         <AlertTriangle className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden />
         <p className="text-sm leading-6 text-warning-foreground">
-          <span className="font-semibold">এটি একটি সিমুলেটেড পেমেন্ট গেটওয়ে — শুধুমাত্র ডেভেলপমেন্ট ডেমো।</span>{" "}
+          <span className="font-semibold">এটি একটি সিমুলেটেড পেমেন্ট গেটওয়ে, শুধুমাত্র ডেভেলপমেন্ট ডেমো।</span>{" "}
           কোনো প্রকৃত টাকা লেনদেন হয় না; পেমেন্ট ফলাফল সার্ভারে সিগনেচার-যাচাইয়ের মাধ্যমে নিশ্চিত হয়।
         </p>
       </div>
@@ -133,7 +133,7 @@ export function PayMockClient({
             <XCircle className="mx-auto size-10 text-destructive" aria-hidden />
             <h1 className="mt-3 font-display text-xl font-semibold">পেমেন্ট ব্যর্থ হয়েছে (সিমুলেটেড)</h1>
             <p className="mx-auto mt-1.5 max-w-sm text-sm leading-6 text-muted-foreground">
-              ব্যর্থ ফলাফল সার্ভারে যাচাই হয়ে অর্ডারে নথিভুক্ত হয়েছে। অর্ডারটি এখনো পরিশোধিত হয়নি — আবার চেষ্টা করতে পারেন।
+              ব্যর্থ ফলাফল সার্ভারে যাচাই হয়ে অর্ডারে নথিভুক্ত হয়েছে। অর্ডারটি এখনো পরিশোধিত হয়নি, আবার চেষ্টা করতে পারেন।
             </p>
             <div className="mt-5 flex flex-col justify-center gap-2.5 sm:flex-row">
               <Button className="h-11" onClick={() => setPhase("idle")}>
@@ -166,7 +166,7 @@ export function PayMockClient({
 
             <Separator className="my-4 bg-hairline" />
 
-            <p className="text-sm font-semibold">পেমেন্ট পদ্ধতি (ডেমো — কোনো তথ্য চাওয়া হয় না)</p>
+            <p className="text-sm font-semibold">পেমেন্ট পদ্ধতি (ডেমো, কোনো তথ্য চাওয়া হয় না)</p>
             <RadioGroup
               value={method}
               onValueChange={setMethod}
@@ -189,7 +189,7 @@ export function PayMockClient({
               ))}
             </RadioGroup>
             <p className="mt-3 text-xs leading-5 text-muted-foreground">
-              এই ডেমো গেটওয়ে কোনো অ্যাকাউন্ট নম্বর, পিন বা ওটিপি চায় না — বাটনে চাপ দিলেই ফলাফল সার্ভারে যাচাই হয়।
+              এই ডেমো গেটওয়ে কোনো অ্যাকাউন্ট নম্বর, পিন বা ওটিপি চায় না, বাটনে চাপ দিলেই ফলাফল সার্ভারে যাচাই হয়।
             </p>
 
             <div className="mt-6 grid gap-2.5">
@@ -228,7 +228,7 @@ export function PayMockClient({
       </div>
 
       <p className="mt-4 text-center text-xs leading-5 text-muted-foreground">
-        ক্রেতা: {merchantName} · এই পেজটি প্রকৃত পেমেন্ট প্রসেসিং নয় — <Link href="/" className="underline underline-offset-4">দোকানে ফিরুন</Link>
+        ক্রেতা: {merchantName} · এই পেজটি প্রকৃত পেমেন্ট প্রসেসিং নয়, <Link href="/" className="underline underline-offset-4">দোকানে ফিরুন</Link>
       </p>
     </div>
   );

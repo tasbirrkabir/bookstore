@@ -53,7 +53,7 @@ export function BookCover({
       {coverImage ? (
         <Image
           src={coverImage}
-          alt={`${title} — প্রচ্ছদ`}
+          alt={`${title}, প্রচ্ছদ`}
           fill
           sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
           className="object-cover"

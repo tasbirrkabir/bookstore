@@ -184,3 +184,25 @@ Work Log:
 
 Stage Summary:
 - All milestone gates verified in-browser. Remaining for real launch: gateway credentials, email provider, real catalogue/rights (documented in README + admin warnings).
+
+---
+Task ID: 1
+Agent: Z.ai Code (main)
+Task: User feedback round: (1) remove all em dashes from the site, (2) fix the plain white/basic look with a richer, more colorful design.
+
+Work Log:
+- Removed every em dash (U+2014) from src: bulk " — " -> ", " via bun script across 62 files; fixed 17 attached-form leftovers (placeholders "—" -> "-", line-end dashes -> comma/full stop) manually.
+- Also normalized en dashes (U+2013) in ranges to plain hyphens in src and in the SQLite DB (StoreSetting announcement/delivery estimates, Product text fields).
+- Cleaned DB text: StoreSetting.announcement + aboutText + 14 products scanned/updated; verified zero em/en dashes remain in DB text fields and src (grep).
+- globals.css: new warm parchment base (#f3ead7 background/paper, cream cards), added accent tokens (oxblood-soft, marigold, marigold-deep, marigold-soft, clay, clay-soft, teal-deep, teal-soft, plum, plum-soft) + Tailwind theme mappings; added gradient utilities .bg-hero (maroon radial glow), .bg-ink-deep, .bg-ember, .pattern-dots texture.
+- layout.tsx: themeColor -> #f3ead7.
+- header-client.tsx: oxblood gradient logo mark next to wordmark; announcement bar now bg-primary (oxblood strip).
+- site-shell.tsx: footer redesigned to dark .bg-ink-deep with marigold uppercase headings, cream links, ember gradient top edge, demo-mode pill badge.
+- page.tsx homepage redesign: maroon gradient hero with dotted texture, cream text, white CTA, hero trust badges; per-category tinted chips (6-color rotation); eyebrow-labeled section headers with pill links; new arrivals on sage band; 3 format cards each in its own tint (oxblood/teal/marigold); collections in rotating tinted panels; ember CTA band with marigold button; marigold trust strip.
+- product-card.tsx: hover lift + shadow polish.
+- Verified: zero em dashes in src + DB, lint clean, dev server fresh rebuild (cleared stale .next cache).
+
+Stage Summary:
+- Site no longer looks plain white: hero, CTA band and footer are now rich maroon/ink color blocks, chips/cards/collections use the full warm accent palette.
+- No em dashes (or en dashes) anywhere user-visible: all replaced with commas, periods, or hyphens; DB announcement/about/product text cleaned too.
+- Browser-verified (Agent Browser): hero, chips, category page, format cards, collections, CTA, trust strip, dark footer, mobile layout, add-to-cart toast + cart badge + cart page all working; no console errors.

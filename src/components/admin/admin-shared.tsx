@@ -18,11 +18,11 @@ export async function adminApi<T>(path: string, init?: RequestInit): Promise<T> 
   try {
     res = await fetch(path, init);
   } catch {
-    throw new Error("নেটওয়ার্ক সমস্যা — আবার চেষ্টা করুন।");
+    throw new Error("নেটওয়ার্ক সমস্যা, আবার চেষ্টা করুন।");
   }
   if (res.status === 401 && typeof window !== "undefined") {
     window.location.href = "/login?next=/admin";
-    throw new Error("সেশন শেষ — আবার লগইন করুন।");
+    throw new Error("সেশন শেষ, আবার লগইন করুন।");
   }
   const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
   if (!res.ok || !data?.ok) {
@@ -249,7 +249,7 @@ export type AdminCoupon = {
   code: string;
   description: string | null;
   discountType: "percent" | "fixed";
-  discountValue: number; // percent 1–100, or poisha for fixed
+  discountValue: number; // percent 1-100, or poisha for fixed
   minSpendMinor: number | null;
   maxDiscountMinor: number | null;
   appliesToFormat: string | null;
@@ -317,7 +317,7 @@ export type OutboxResponse = { ok: true; messages: OutboxMessage[] };
 // ─── Formatting helpers ──────────────────────────────────────────────────────
 
 function bnDate(iso: string | null | undefined, withTime: boolean): string {
-  if (!iso) return "—";
+  if (!iso) return "-";
   try {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return iso.slice(0, 10);

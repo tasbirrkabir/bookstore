@@ -6,7 +6,7 @@ import { PolicyPage, PolicySection } from "@/components/policy-page";
 
 export const metadata: Metadata = {
   title: "যোগাযোগ",
-  description: "পাতা সাপোর্টে যোগাযোগ করুন — ইমেইল ও ফোনে আমরা সাধারণত ২৪–৪৮ ঘণ্টার মধ্যে উত্তর দিই।",
+  description: "পাতা সাপোর্টে যোগাযোগ করুন, ইমেইল ও ফোনে আমরা সাধারণত ২৪-৪৮ ঘণ্টার মধ্যে উত্তর দিই।",
 };
 
 export default async function ContactPage() {
@@ -16,7 +16,7 @@ export default async function ContactPage() {
     <PolicyPage
       section="সহায়তা"
       title="যোগাযোগ"
-      subtitle="অর্ডার, ডেলিভারি, ডাউনলোড বা ফেরত — যেকোনো বিষয়ে সরাসরি লিখুন বা ডাকুন।"
+      subtitle="অর্ডার, ডেলিভারি, ডাউনলোড বা ফেরত, যেকোনো বিষয়ে সরাসরি লিখুন বা ডাকুন।"
     >
       <PolicySection title="যোগাযোগের চ্যানেল">
         <ul className="space-y-3">
@@ -39,7 +39,7 @@ export default async function ContactPage() {
               <a href={`tel:${settings.supportPhone.replace(/[^+\d]/g, "")}`} className="mt-0.5 block text-sm text-primary underline underline-offset-4">
                 {settings.supportPhone}
               </a>
-              <p className="mt-1 text-xs leading-5 text-muted-foreground">শনি–বৃহস্পতি, সকাল ১০টা – সন্ধ্যা ৭টা (ঢাকা সময়)।</p>
+              <p className="mt-1 text-xs leading-5 text-muted-foreground">শনি-বৃহস্পতি, সকাল ১০টা - সন্ধ্যা ৭টা (ঢাকা সময়)।</p>
             </div>
           </li>
           <li className="flex items-start gap-3 rounded-lg border border-hairline bg-card p-4">
@@ -48,7 +48,7 @@ export default async function ContactPage() {
               <p className="text-sm font-semibold">ঠিকানা</p>
               <p className="mt-0.5 text-sm text-foreground/85">{settings.addressLine}</p>
               <p className="mt-1 text-xs leading-5 text-muted-foreground">
-                আমরা অনলাইন দোকান — সরাসরি ওয়াক-ইন কেনাকাটার শোরুম নেই।
+                আমরা অনলাইন দোকান, সরাসরি ওয়াক-ইন কেনাকাটার শোরুম নেই।
               </p>
             </div>
           </li>
@@ -57,7 +57,7 @@ export default async function ContactPage() {
 
       <PolicySection title="কখন উত্তর পাবেন">
         <p>
-          ইমেইলে আমরা সাধারণত <strong>২৪–৪৮ ঘণ্টার মধ্যে</strong> (কর্মদিবসের হিসাবে) উত্তর দিই। অর্ডার প্রস্তুতি
+          ইমেইলে আমরা সাধারণত <strong>২৪-৪৮ ঘণ্টার মধ্যে</strong> (কর্মদিবসের হিসাবে) উত্তর দিই। অর্ডার প্রস্তুতি
           ও ডেলিভারির সময়সীমা{" "}
           <Link href="/policies/delivery" className="text-primary underline underline-offset-4">ডেলিভারি নীতিতে</Link> আলাদা
           করে লেখা আছে। জরুরি প্রয়োজনে (যেমন ডাউনলোড সমস্যা) ইমেইলের বিষয় লাইনে &ldquo;ডাউনলোড&rdquo; লিখলে দ্রুত
@@ -69,7 +69,7 @@ export default async function ContactPage() {
         <ul className="list-disc space-y-1.5 pl-5">
           <li>অর্ডার নম্বর (যেমন PATA-XXXXXX)</li>
           <li>অর্ডার করার সময় ব্যবহৃত ইমেইল বা মোবাইল</li>
-          <li>সমস্যার সংক্ষিপ্ত বর্ণনা — স্ক্রিনশট থাকলে আরও ভালো</li>
+          <li>সমস্যার সংক্ষিপ্ত বর্ণনা, স্ক্রিনশট থাকলে আরও ভালো</li>
         </ul>
       </PolicySection>
 
@@ -77,7 +77,7 @@ export default async function ContactPage() {
         <p className="flex items-start gap-2">
           <Clock className="mt-1 size-4 shrink-0 text-sage" aria-hidden />
           <span>
-            এই পেজে কোনো ফর্ম ইচ্ছাকৃতভাবে রাখা হয়নি — আমরা এমন কোনো ফর্ম দেখাতে চাই না যা বার্তা পাঠিয়েছে
+            এই পেজে কোনো ফর্ম ইচ্ছাকৃতভাবে রাখা হয়নি, আমরা এমন কোনো ফর্ম দেখাতে চাই না যা বার্তা পাঠিয়েছে
             ভেবে ধোঁকা দেয়। ডেমো বিল্ডে ইনবক্স নেই, তাই প্রকৃত যোগাযোগের জন্য উপরের চ্যানেলগুলোই ব্যবহার করুন।
           </span>
         </p>

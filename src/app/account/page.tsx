@@ -54,7 +54,7 @@ export default async function AccountPage() {
             </div>
             <p className="mt-4 font-display text-xl font-semibold">এখনো কোনো অর্ডার নেই</p>
             <p className="mt-1.5 max-w-sm text-sm leading-6 text-muted-foreground">
-              প্রথম অর্ডারটি করে ফেলুন — হার্ড কপি, PDF/ই-বুক বা বান্ডেল, সবই এক জায়গা থেকে।
+              প্রথম অর্ডারটি করে ফেলুন, হার্ড কপি, PDF/ই-বুক বা বান্ডেল, সবই এক জায়গা থেকে।
             </p>
             <Button asChild className="mt-5 h-11">
               <Link href="/shop">বই দেখুন</Link>

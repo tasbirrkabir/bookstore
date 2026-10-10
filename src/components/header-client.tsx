@@ -95,9 +95,17 @@ export function HeaderClient({
         </Sheet>
 
         {/* Wordmark */}
-        <Link href="/" className="flex items-baseline gap-2 shrink-0" aria-label={`${storeName} — হোম`}>
-          <span className="font-display text-2xl sm:text-[1.7rem] font-semibold tracking-tight text-foreground">{storeName}</span>
-          <span className="hidden sm:inline text-[11px] uppercase tracking-[0.18em] text-muted-foreground">{storeNameEn}</span>
+        <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label={`${storeName}, হোম`}>
+          <span
+            aria-hidden
+            className="flex size-9 items-center justify-center rounded-lg bg-gradient-to-br from-oxblood to-oxblood-deep text-primary-foreground shadow-sm"
+          >
+            <BookOpen className="size-5" />
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="font-display text-2xl sm:text-[1.7rem] font-semibold tracking-tight text-foreground">{storeName}</span>
+            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{storeNameEn}</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -199,7 +207,7 @@ export function HeaderClient({
           {/* Cart */}
           <Link
             href="/cart"
-            aria-label={`কার্ট — ${cartCount}টি আইটেম`}
+            aria-label={`কার্ট, ${cartCount}টি আইটেম`}
             className="relative inline-flex size-10 items-center justify-center rounded-md text-foreground/80 hover:bg-accent"
           >
             <ShoppingCart className="size-5" />
@@ -255,14 +263,14 @@ export function Announcement({ text }: { text: string }) {
   const [hidden, setHidden] = useState(false);
   if (hidden) return null;
   return (
-    <div className="bg-secondary text-secondary-foreground">
-      <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-1.5 text-center text-xs sm:text-sm">
+    <div className="bg-primary text-primary-foreground">
+      <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-2 text-center text-xs sm:text-sm">
         <p className="flex-1">{text}</p>
         <button
           type="button"
           onClick={() => setHidden(true)}
           aria-label="ঘোষণা বন্ধ করুন"
-          className="shrink-0 rounded p-1 hover:bg-secondary-foreground/10"
+          className="shrink-0 rounded p-1 hover:bg-primary-foreground/15"
         >
           <X className="size-3.5" />
         </button>

@@ -3,7 +3,7 @@ import { getSession } from "@/lib/auth";
 import { AdminProviders } from "@/components/admin/admin-providers";
 import { AdminShell } from "@/components/admin/admin-shell";
 
-// UX guard only — every admin API re-checks permissions server-side.
+// UX guard only, every admin API re-checks permissions server-side.
 export const dynamic = "force-dynamic";
 
 export const metadata = {

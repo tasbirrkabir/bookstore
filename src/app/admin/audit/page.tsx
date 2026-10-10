@@ -61,10 +61,10 @@ function AuditTab() {
                       <span className="rounded-sm bg-muted px-1.5 py-0.5 font-mono text-xs">{e.action}</span>
                     </TableCell>
                     <TableCell className="text-xs text-muted-foreground">
-                      {e.targetType ? `${e.targetType}${e.targetId ? `:${e.targetId.slice(0, 8)}` : ""}` : "—"}
+                      {e.targetType ? `${e.targetType}${e.targetId ? `:${e.targetId.slice(0, 8)}` : ""}` : "-"}
                     </TableCell>
                     <TableCell className="max-w-56 truncate text-sm text-muted-foreground" title={e.detail ?? undefined}>
-                      {e.detail ?? "—"}
+                      {e.detail ?? "-"}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -118,7 +118,7 @@ function OutboxTab() {
                     <TableCell className="max-w-64 truncate text-sm" title={m.subject}>
                       {m.subject}
                     </TableCell>
-                    <TableCell className="font-mono text-xs text-muted-foreground">{m.orderNumber ?? "—"}</TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">{m.orderNumber ?? "-"}</TableCell>
                     <TableCell>
                       <div className="flex flex-col items-start gap-0.5">
                         <OutboxStatusBadge status={m.status} />

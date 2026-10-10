@@ -47,7 +47,7 @@ function availabilityText(v: VariantDTO): string {
 
 /**
  * Purchase column for the product page: format radio-cards, quantity stepper,
- * add-to-cart action, per-format info blocks — plus the sticky mobile buy bar
+ * add-to-cart action, per-format info blocks, plus the sticky mobile buy bar
  * that appears once the panel itself has been scrolled past.
  */
 export function ProductPurchaseSection({
@@ -105,7 +105,7 @@ export function ProductPurchaseSection({
       toast.success("কার্টে যোগ হয়েছে");
       router.refresh();
     } catch {
-      toast.error("নেটওয়ার্ক সমস্যা — আবার চেষ্টা করুন।");
+      toast.error("নেটওয়ার্ক সমস্যা, আবার চেষ্টা করুন।");
     } finally {
       setPending(false);
     }
@@ -165,7 +165,7 @@ export function ProductPurchaseSection({
           {/* Price driven by the selected variant */}
           <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <p className="font-display text-3xl font-semibold">
-              {selected ? formatBdt(selected.priceMinor) : "—"}
+              {selected ? formatBdt(selected.priceMinor) : "-"}
             </p>
             {selected?.compareAtPriceMinor && selected.compareAtPriceMinor > selected.priceMinor ? (
               <>
@@ -225,7 +225,7 @@ export function ProductPurchaseSection({
           </Button>
           <p className="mt-2.5 flex items-center gap-1.5 text-xs text-muted-foreground">
             <ShieldCheck aria-hidden className="size-3.5 text-sage" />
-            নিরাপদ চেকআউট — যাচাইকৃত পেমেন্টের পরেই ডিজিটাল অ্যাক্সেস
+            নিরাপদ চেকআউট, যাচাইকৃত পেমেন্টের পরেই ডিজিটাল অ্যাক্সেস
           </p>
 
           {/* Per-format info blocks */}
@@ -246,7 +246,7 @@ export function ProductPurchaseSection({
                   href="/policies/returns"
                   className="font-medium underline underline-offset-4 hover:text-primary"
                 >
-                  রিটার্ন নীতি — {bnNum(settings.returnWindowDays)} দিনের সময়সীমা
+                  রিটার্ন নীতি, {bnNum(settings.returnWindowDays)} দিনের সময়সীমা
                 </Link>
               </p>
             </div>
@@ -267,7 +267,7 @@ export function ProductPurchaseSection({
                 </span>
               </p>
               <p className="text-muted-foreground">
-                পেমেন্ট যাচাইয়ের পর ডাউনলোড অ্যাক্সেস পাবেন — ডিজিটাল লাইব্রেরি থেকে বারবার পড়তে
+                পেমেন্ট যাচাইয়ের পর ডাউনলোড অ্যাক্সেস পাবেন, ডিজিটাল লাইব্রেরি থেকে বারবার পড়তে
                 পারবেন।
               </p>
             </div>
@@ -275,7 +275,7 @@ export function ProductPurchaseSection({
 
           {selected && selected.formatType === "bundle" ? (
             <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-              বান্ডেলে হার্ড কপি ও PDF দুটোই থাকছে — এক অর্ডারেই ডেলিভারি ও ডাউনলোড অ্যাক্সেস।
+              বান্ডেলে হার্ড কপি ও PDF দুটোই থাকছে, এক অর্ডারেই ডেলিভারি ও ডাউনলোড অ্যাক্সেস।
             </p>
           ) : null}
         </>
@@ -291,7 +291,7 @@ export function ProductPurchaseSection({
         </div>
       )}
 
-      {/* Sticky mobile buy bar — appears after the panel scrolls out of view */}
+      {/* Sticky mobile buy bar, appears after the panel scrolls out of view */}
       <div
         aria-hidden={!barVisible}
         className={cn(

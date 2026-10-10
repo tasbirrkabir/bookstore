@@ -202,7 +202,7 @@ export default function AdminOverviewPage() {
                 icon={MailX}
                 title="ইমেইল প্রোভাইডার কনফিগার করা নেই"
               >
-                সব নোটিফিকেশন NotificationOutbox-এ জমা হচ্ছে — অডিট ও নোটিফিকেশন পাতায় দেখুন।
+                সব নোটিফিকেশন NotificationOutbox-এ জমা হচ্ছে, অডিট ও নোটিফিকেশন পাতায় দেখুন।
               </ConfigAlert>
             ) : null}
             {data.config.paymentProvider === "mock" ? (

@@ -9,7 +9,7 @@ export type CouponValidation =
 
 /**
  * Validate a coupon against a subtotal and cart format mix.
- * Pure validation — redemption is written transactionally during order creation.
+ * Pure validation, redemption is written transactionally during order creation.
  */
 export async function validateCoupon(code: string, subtotalMinor: number, formatsInCart: FormatType[]): Promise<CouponValidation> {
   const clean = code.trim().toUpperCase();

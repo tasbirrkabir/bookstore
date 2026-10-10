@@ -373,12 +373,12 @@ export async function upsertCoupon(input: {
 }) {
   const admin = await requireAdmin();
   const code = input.code.trim().toUpperCase();
-  if (!/^[A-Z0-9_-]{3,24}$/.test(code)) return { ok: false as const, error: "কোড ৩–২৪ অক্ষরের হতে হবে (A-Z, 0-9)।" };
+  if (!/^[A-Z0-9_-]{3,24}$/.test(code)) return { ok: false as const, error: "কোড ৩-২৪ অক্ষরের হতে হবে (A-Z, 0-9)।" };
   const discountType = input.discountType;
   let discountValue: number;
   if (discountType === "percent") {
     discountValue = Math.floor(Number(input.discountValueTaka));
-    if (!Number.isFinite(discountValue) || discountValue < 1 || discountValue > 100) return { ok: false as const, error: "ছাড়ের হার ১–১০০% এর মধ্যে দিন।" };
+    if (!Number.isFinite(discountValue) || discountValue < 1 || discountValue > 100) return { ok: false as const, error: "ছাড়ের হার ১-১০০% এর মধ্যে দিন।" };
   } else {
     discountValue = takaInputToPoisha(input.discountValueTaka) ?? 0;
     if (discountValue <= 0) return { ok: false as const, error: "সঠিক ছাড়ের পরিমাণ দিন।" };
@@ -427,7 +427,7 @@ export async function saveUploadedAsset(input: {
   if (isPrivate) {
     if (input.mimeType !== "application/pdf") return { ok: false as const, error: "শুধু PDF ফাইল গ্রহণযোগ্য।" };
     if (input.file.length > 50 * 1024 * 1024) return { ok: false as const, error: "ফাইল সাইজ সর্বোচ্চ 50MB।" };
-    if (!input.rightsConfirmed) return { ok: false as const, error: "স্বত্ব নিশ্চিত করা আবশ্যক — শুধু নিজস্ব/লাইসেন্সকৃত ফাইল আপলোড করুন।" };
+    if (!input.rightsConfirmed) return { ok: false as const, error: "স্বত্ব নিশ্চিত করা আবশ্যক, শুধু নিজস্ব/লাইসেন্সকৃত ফাইল আপলোড করুন।" };
   } else {
     if (!["image/jpeg", "image/png", "image/webp", "image/avif"].includes(input.mimeType)) return { ok: false as const, error: "কভার ছবি: JPG/PNG/WebP/AVIF গ্রহণযোগ্য।" };
     if (input.file.length > 8 * 1024 * 1024) return { ok: false as const, error: "ছবি সর্বোচ্চ 8MB।" };
@@ -463,7 +463,7 @@ export async function deleteAsset(id: string) {
   const asset = await db.asset.findUnique({ where: { id } });
   if (!asset) return { ok: false as const, error: "অ্যাসেট পাওয়া যায়নি।" };
   const inUse = await db.productVariant.count({ where: { digitalAssetId: id } });
-  if (inUse > 0) return { ok: false as const, error: "এই ফাইল একটি ভ্যারিয়েন্টে ব্যবহৃত — আগে ভ্যারিয়েন্ট থেকে সরান।" };
+  if (inUse > 0) return { ok: false as const, error: "এই ফাইল একটি ভ্যারিয়েন্টে ব্যবহৃত, আগে ভ্যারিয়েন্ট থেকে সরান।" };
   const dir = asset.isPrivate ? PRIVATE_ROOT : PUBLIC_ROOT;
   await unlink(path.join(dir, asset.storagePath)).catch(() => {});
   await db.asset.delete({ where: { id } });
@@ -471,7 +471,7 @@ export async function deleteAsset(id: string) {
   return { ok: true as const };
 }
 
-/** Product editor data — includes private asset metadata (admin only). */
+/** Product editor data, includes private asset metadata (admin only). */
 export async function getProductForAdmin(id: string) {
   await requireAdmin();
   const p = await db.product.findUnique({

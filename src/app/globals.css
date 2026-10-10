@@ -42,8 +42,18 @@
   --color-ink-muted: var(--ink-muted);
   --color-oxblood: var(--oxblood);
   --color-oxblood-deep: var(--oxblood-deep);
+  --color-oxblood-soft: var(--oxblood-soft);
   --color-sage: var(--sage);
   --color-sage-soft: var(--sage-soft);
+  --color-marigold: var(--marigold);
+  --color-marigold-deep: var(--marigold-deep);
+  --color-marigold-soft: var(--marigold-soft);
+  --color-clay: var(--clay);
+  --color-clay-soft: var(--clay-soft);
+  --color-teal-deep: var(--teal-deep);
+  --color-teal-soft: var(--teal-soft);
+  --color-plum: var(--plum);
+  --color-plum-soft: var(--plum-soft);
   --color-hairline: var(--hairline);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -54,45 +64,55 @@
 :root {
   --radius: 0.5rem;
 
-  /* Editorial bookstore palette — warm paper, dark ink, restrained accents */
-  --paper: #f7f4ee;
-  --ink: #242520;
-  --ink-muted: #77766e;
+  /* Editorial bookstore palette, warm parchment ground with saturated accents */
+  --paper: #f3ead7;
+  --ink: #26251d;
+  --ink-muted: #7d7462;
   --oxblood: #7a263a;
   --oxblood-deep: #5e1c2d;
+  --oxblood-soft: #f3dfe0;
   --sage: #63715b;
-  --sage-soft: #eef0e8;
-  --hairline: #e4ded4;
+  --sage-soft: #e9ecdc;
+  --marigold: #b97f10;
+  --marigold-deep: #8a5c08;
+  --marigold-soft: #f5e6c3;
+  --clay: #b4643c;
+  --clay-soft: #f6e3d4;
+  --teal-deep: #3c6b64;
+  --teal-soft: #dfeae4;
+  --plum: #5c3a5e;
+  --plum-soft: #ebe0eb;
+  --hairline: #e2d5ba;
 
-  --background: #f7f4ee;
-  --foreground: #242520;
-  --card: #fffefb;
-  --card-foreground: #242520;
-  --popover: #fffefb;
-  --popover-foreground: #242520;
+  --background: #f3ead7;
+  --foreground: #26251d;
+  --card: #fffcf4;
+  --card-foreground: #26251d;
+  --popover: #fffcf4;
+  --popover-foreground: #26251d;
   --primary: #7a263a;
   --primary-foreground: #fdf8f5;
-  --secondary: #eef0e8;
+  --secondary: #e9ecdc;
   --secondary-foreground: #3d4238;
-  --muted: #f1ede4;
-  --muted-foreground: #77766e;
-  --accent: #eef0e8;
+  --muted: #ece0c8;
+  --muted-foreground: #7d7462;
+  --accent: #e9ecdc;
   --accent-foreground: #44503c;
   --destructive: #a13232;
-  --border: #e4ded4;
-  --input: #ddd6c9;
+  --border: #e2d5ba;
+  --input: #d9c9a8;
   --ring: #7a263a;
   --success: #3d6b4f;
   --success-foreground: #f2f7f0;
   --warning: #946200;
   --warning-foreground: #fff9ec;
-  --sidebar: #fffefb;
-  --sidebar-foreground: #242520;
+  --sidebar: #fffcf4;
+  --sidebar-foreground: #26251d;
   --sidebar-primary: #7a263a;
   --sidebar-primary-foreground: #fdf8f5;
-  --sidebar-accent: #f1ede4;
-  --sidebar-accent-foreground: #242520;
-  --sidebar-border: #e4ded4;
+  --sidebar-accent: #ece0c8;
+  --sidebar-accent-foreground: #26251d;
+  --sidebar-border: #e2d5ba;
   --sidebar-ring: #7a263a;
 }
 
@@ -107,6 +127,36 @@
   ::selection {
     background: #7a263a22;
   }
+}
+
+/* ─── Rich color blocks ─────────────────────────────────────────────────── */
+
+/* Hero maroon gradient with warm glow */
+.bg-hero {
+  background:
+    radial-gradient(110% 130% at 88% -10%, rgba(212, 146, 40, 0.38) 0%, transparent 52%),
+    radial-gradient(130% 150% at -10% 115%, rgba(18, 7, 11, 0.55) 0%, transparent 58%),
+    linear-gradient(150deg, #8d2d46 0%, #6f2237 46%, #471324 100%);
+}
+
+/* Deep ink section with oxblood ember */
+.bg-ink-deep {
+  background:
+    radial-gradient(100% 140% at 100% 0%, rgba(122, 38, 58, 0.32) 0%, transparent 55%),
+    linear-gradient(165deg, #2c2a22 0%, #211f19 55%, #17160f 100%);
+}
+
+/* Warm ember glow for CTA panels */
+.bg-ember {
+  background:
+    radial-gradient(120% 140% at 15% -20%, rgba(212, 146, 40, 0.32) 0%, transparent 55%),
+    linear-gradient(140deg, #7a263a 0%, #5e1c2d 55%, #40101f 100%);
+}
+
+/* Subtle dotted texture overlay (use on an absolutely positioned layer) */
+.pattern-dots {
+  background-image: radial-gradient(rgba(253, 246, 232, 0.16) 1.2px, transparent 1.3px);
+  background-size: 20px 20px;
 }
 
 /* Hairline dividers used across the editorial layout */
@@ -191,7 +241,7 @@
   height: 6px;
 }
 .scroll-slim::-webkit-scrollbar-thumb {
-  background: #d8d1c2;
+  background: #d6c6a2;
   border-radius: 999px;
 }
 .scroll-slim::-webkit-scrollbar-track {

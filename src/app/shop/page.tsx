@@ -46,7 +46,7 @@ export default async function ShopPage({
         </h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
           {bnNum(result.total)}টি বই পাওয়া গেছে
-          {f.q ? " — শিরোনাম, লেখক, প্রকাশক ও ISBN ধরে খোঁজা হয়েছে" : ""}
+          {f.q ? ", শিরোনাম, লেখক, প্রকাশক ও ISBN ধরে খোঁজা হয়েছে" : ""}
         </p>
       </div>
       <div className="mt-8">

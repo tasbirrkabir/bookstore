@@ -39,7 +39,7 @@ export function TrackForm() {
       }
       setError(data.error ?? "এই তথ্যে কোনো অর্ডার মেলেনি। অর্ডার নম্বর ও যোগাযোগের তথ্য যাচাই করুন।");
     } catch {
-      setError("নেটওয়ার্ক সমস্যা — একটু পরে আবার চেষ্টা করুন।");
+      setError("নেটওয়ার্ক সমস্যা, একটু পরে আবার চেষ্টা করুন।");
     } finally {
       setLoading(false);
     }
@@ -55,7 +55,7 @@ export function TrackForm() {
         </div>
         <h1 className="mt-4 font-display text-2xl font-semibold sm:text-3xl">অর্ডার ট্র্যাক করুন</h1>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">
-          অর্ডার নম্বর ও (ইমেইল অথবা মোবাইল) দিন — মিলে গেলে অর্ডার পেজের সরাসরি লিঙ্ক পেয়ে যাবেন।
+          অর্ডার নম্বর ও (ইমেইল অথবা মোবাইল) দিন, মিলে গেলে অর্ডার পেজের সরাসরি লিঙ্ক পেয়ে যাবেন।
         </p>
 
         <form onSubmit={onSubmit} noValidate className="mt-6 space-y-4">
@@ -104,7 +104,7 @@ export function TrackForm() {
         </form>
 
         <p className="mt-4 text-xs leading-5 text-muted-foreground">
-          নিরাপত্তার স্বার্থে অর্ডার নম্বর একা যথেষ্ট নয় — ইমেইল বা মোবাইলও মিলতে হবে। লিঙ্কটি ২৪ ঘণ্টার জন্য কাজ করে।
+          নিরাপত্তার স্বার্থে অর্ডার নম্বর একা যথেষ্ট নয়, ইমেইল বা মোবাইলও মিলতে হবে। লিঙ্কটি ২৪ ঘণ্টার জন্য কাজ করে।
         </p>
       </div>
 

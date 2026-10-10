@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
  * DEV-ONLY simulated gateway "checkout completion".
  * This endpoint plays the role of the gateway's server: it builds the payment
  * result payload, signs it with the gateway secret, and submits it to the
- * verification pipeline — exactly what a real gateway's server-to-server
+ * verification pipeline, exactly what a real gateway's server-to-server
  * verification would do. The verifier still validates signature, amount,
  * currency and order reference, so forged callback requests fail.
  * Guarded: refuses to run in production or when PAYMENT_PROVIDER !== "mock".

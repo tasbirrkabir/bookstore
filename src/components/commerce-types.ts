@@ -1,5 +1,5 @@
 // Client-safe mirror of the cart quote DTO returned by GET /api/cart.
-// (src/lib/cart.ts is server-only — client components must not import it, not even types.)
+// (src/lib/cart.ts is server-only, client components must not import it, not even types.)
 
 export type CartLineFormat = "physical" | "digital" | "bundle";
 

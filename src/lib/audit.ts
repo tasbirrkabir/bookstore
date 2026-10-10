@@ -1,7 +1,7 @@
 import "server-only";
 import { db } from "@/lib/db";
 
-/** Append an admin audit entry. Never log secrets — only actions and references. */
+/** Append an admin audit entry. Never log secrets, only actions and references. */
 export async function logAudit(entry: { actorEmail: string; action: string; targetType?: string; targetId?: string; detail?: string }) {
   try {
     await db.adminAuditLog.create({

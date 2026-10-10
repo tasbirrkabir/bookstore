@@ -81,7 +81,7 @@ function FlagIcons({ row }: { row: AdminProductRow }) {
           <span className="sr-only">সম্পাদকের পছন্দ</span>
         </span>
       ) : null}
-      {!row.featured && !row.newArrival && !row.editorPick ? <span className="text-xs">—</span> : null}
+      {!row.featured && !row.newArrival && !row.editorPick ? <span className="text-xs">-</span> : null}
     </span>
   );
 }
@@ -140,7 +140,7 @@ function DeleteButton({ product, onDeleted }: { product: AdminProductRow; onDele
         <AlertDialogHeader>
           <AlertDialogTitle>পণ্যটি মুছে ফেলবেন?</AlertDialogTitle>
           <AlertDialogDescription>
-            “{product.title}” স্থায়ীভাবে মুছে যাবে — ভ্যারিয়েন্ট, বিভাগ ও কালেকশন লিংকসহ। এই কাজ ফেরানো যাবে না।
+            “{product.title}” স্থায়ীভাবে মুছে যাবে, ভ্যারিয়েন্ট, বিভাগ ও কালেকশন লিংকসহ। এই কাজ ফেরানো যাবে না।
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -188,7 +188,7 @@ export default function AdminProductsPage() {
     <div className="space-y-5">
       <PageHeader
         title="পণ্য"
-        description="ক্যাটালগের সব বই — খসড়া, প্রকাশিত ও আর্কাইভ।"
+        description="ক্যাটালগের সব বই, খসড়া, প্রকাশিত ও আর্কাইভ।"
         actions={
           <Button asChild className="min-h-[44px]">
             <Link href="/admin/products/new">
@@ -315,7 +315,7 @@ export default function AdminProductsPage() {
       </div>
       {!isLoading && data ? (
         <p className="text-xs text-muted-foreground">
-          সর্বশেষ ১০০টি পণ্য দেখানো হচ্ছে{rows.length > 0 ? ` — মোট ${rows.length}টি` : ""}।
+          সর্বশেষ ১০০টি পণ্য দেখানো হচ্ছে{rows.length > 0 ? `, মোট ${rows.length}টি` : ""}।
         </p>
       ) : null}
     </div>

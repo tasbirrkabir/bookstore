@@ -62,7 +62,7 @@ export type CreateOrderResult =
  * - Writes immutable order-line snapshots.
  * - COD only for physical-only carts. Digital/mixed carts must pay online.
  * - Stock commit policy (documented): committed atomically at the moment the order
- *   becomes confirmed — COD orders at creation, online orders at verified payment.
+ *   becomes confirmed, COD orders at creation, online orders at verified payment.
  *   Cancel/return restocks per policy.
  */
 export async function createOrderFromCart(input: CreateOrderInput): Promise<CreateOrderResult> {
@@ -74,7 +74,7 @@ export async function createOrderFromCart(input: CreateOrderInput): Promise<Crea
   const quote = await quoteCart(cartId);
   const purchasable = quote.lines.filter((l) => l.hasIssue === null);
   if (purchasable.length === 0) {
-    return { ok: false, error: quote.lines.length === 0 ? "কার্ট খালি।" : "কার্টে অপ্রাপ্য বা স্টকশেষ আইটেম আছে — সেগুলো সরিয়ে আবার চেষ্টা করুন।", code: quote.lines.length === 0 ? "CART_EMPTY" : "STOCK" };
+    return { ok: false, error: quote.lines.length === 0 ? "কার্ট খালি।" : "কার্টে অপ্রাপ্য বা স্টকশেষ আইটেম আছে, সেগুলো সরিয়ে আবার চেষ্টা করুন।", code: quote.lines.length === 0 ? "CART_EMPTY" : "STOCK" };
   }
 
   // Business rules
@@ -248,7 +248,7 @@ export class CouponLimitError extends Error {
   }
 }
 
-/** Atomic stock commit — conditional update prevents overselling under concurrency. */
+/** Atomic stock commit, conditional update prevents overselling under concurrency. */
 export async function commitStock(tx: Prisma.TransactionClient, lines: { variantId: string; quantity: number; formatType: string }[], orderId: string) {
   for (const line of lines) {
     if (line.formatType === "digital") continue; // digital has no stock
@@ -298,7 +298,7 @@ export async function authorizeOrderAccess(orderNumber: string, guestToken?: str
   return { ok: false as const, error: "forbidden" };
 }
 
-/** Safe customer-facing order projection — strips admin notes and token hashes. */
+/** Safe customer-facing order projection, strips admin notes and token hashes. */
 export function publicOrderProjection(order: NonNullable<Awaited<ReturnType<typeof authorizeOrderAccess>>["order"]> | Prisma.OrderGetPayload<{ include: { items: true; payments: true; events: true } }>) {
   const { adminNote: _a, guestTokenHash: _g, ...safe } = order;
   return safe;

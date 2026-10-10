@@ -23,7 +23,7 @@ export default async function LibraryPage() {
           </div>
           <h1 className="mt-4 font-display text-2xl font-semibold">আপনার ডিজিটাল লাইব্রেরি</h1>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            কেনা PDF/ই-বুকগুলো এখানে জমা থাকবে। দেখতে লগইন করুন — গেস্ট অর্ডারের বই অর্ডার পেজের লিঙ্ক থেকেই ডাউনলোড করা যায়।
+            কেনা PDF/ই-বুকগুলো এখানে জমা থাকবে। দেখতে লগইন করুন, গেস্ট অর্ডারের বই অর্ডার পেজের লিঙ্ক থেকেই ডাউনলোড করা যায়।
           </p>
           <Button asChild size="lg" className="mt-6 h-11">
             <Link href="/login?next=/library">

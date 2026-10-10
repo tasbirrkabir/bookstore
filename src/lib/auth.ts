@@ -10,9 +10,9 @@ const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 function authSecret(): string {
   const secret = process.env.AUTH_SECRET;
   if (secret && secret.length >= 16) return secret;
-  // Dev fallback — clearly documented; production must set AUTH_SECRET.
+  // Dev fallback, clearly documented; production must set AUTH_SECRET.
   if (process.env.NODE_ENV === "production") {
-    console.warn("[auth] AUTH_SECRET missing in production — using ephemeral dev secret. Sessions will not survive restarts.");
+    console.warn("[auth] AUTH_SECRET missing in production, using ephemeral dev secret. Sessions will not survive restarts.");
   }
   return "pata-dev-secret-do-not-use-in-prod-0001";
 }
@@ -61,7 +61,7 @@ export async function getCurrentUser() {
   return db.user.findUnique({ where: { id: session.uid } });
 }
 
-/** Server-side admin guard — throws 403-shaped error if not admin. */
+/** Server-side admin guard, throws 403-shaped error if not admin. */
 export async function requireAdmin(): Promise<SessionUser> {
   const session = await getSession();
   if (!session) throw new AuthError("UNAUTHENTICATED", 401);
@@ -106,7 +106,7 @@ export async function loginUser(input: { email: string; password: string }) {
   const email = input.email.trim().toLowerCase();
   const user = await db.user.findUnique({ where: { email } });
   if (!user || !user.passwordHash) {
-    // Generic message — do not reveal whether the email exists.
+    // Generic message, do not reveal whether the email exists.
     throw new AuthError("BAD_CREDENTIALS", 401);
   }
   if (!verifyPassword(input.password, user.passwordHash)) {

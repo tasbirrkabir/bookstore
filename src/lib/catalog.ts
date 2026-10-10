@@ -221,7 +221,7 @@ export async function getProductBySlug(slug: string): Promise<ProductDetailDTO |
       isActive: v.isActive,
       inStock: v.formatType === "digital" ? true : (v.stockOnHand ?? 0) > 0,
       stockOnHand: v.formatType === "digital" ? null : v.stockOnHand,
-      // Safe boolean only — never expose the storage path or file URL.
+      // Safe boolean only, never expose the storage path or file URL.
       hasDigitalFile: !!v.digitalAssetId && !!v.rightsConfirmedAt,
       downloadLimit: v.downloadLimit,
       downloadExpiryDays: v.downloadExpiryDays,

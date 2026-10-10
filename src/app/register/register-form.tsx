@@ -50,7 +50,7 @@ export function RegisterForm({ next }: { next: string }) {
       });
       const data = (await res.json()) as { ok: boolean; error?: string; user?: { email: string; name: string | null } };
       if (res.ok && data.ok) {
-        toast.success("অ্যাকাউন্ট তৈরি হয়েছে — স্বাগতম!");
+        toast.success("অ্যাকাউন্ট তৈরি হয়েছে, স্বাগতম!");
         router.push(next);
         router.refresh();
         return;
@@ -61,7 +61,7 @@ export function RegisterForm({ next }: { next: string }) {
       }
       setErrors({ form: data.error ?? "অ্যাকাউন্ট খোলা যায়নি। আবার চেষ্টা করুন।" });
     } catch {
-      setErrors({ form: "নেটওয়ার্ক সমস্যা — আবার চেষ্টা করুন।" });
+      setErrors({ form: "নেটওয়ার্ক সমস্যা, আবার চেষ্টা করুন।" });
     } finally {
       setLoading(false);
     }

@@ -15,11 +15,11 @@ export function CopyOrderLink({ path }: { path: string }) {
     const url = typeof window !== "undefined" ? `${window.location.origin}${path}` : path;
     try {
       await navigator.clipboard.writeText(url);
-      toast.success("অর্ডার লিঙ্ক কপি হয়েছে — এটি সংরক্ষণ করুন।");
+      toast.success("অর্ডার লিঙ্ক কপি হয়েছে, এটি সংরক্ষণ করুন।");
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2500);
     } catch {
-      toast.error("কপি করা যায়নি — ব্রাউজারের ঠিকানা বার থেকে লিঙ্কটি কপি করুন।");
+      toast.error("কপি করা যায়নি, ব্রাউজারের ঠিকানা বার থেকে লিঙ্কটি কপি করুন।");
     }
   }
 

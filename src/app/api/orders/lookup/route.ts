@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   const orderNumber = typeof body?.orderNumber === "string" ? body.orderNumber.trim().toUpperCase() : "";
   const contact = typeof body?.contact === "string" ? body.contact.trim().toLowerCase() : "";
   if (!orderNumber || !contact) {
-    return NextResponse.json({ ok: false, error: "অর্ডার নম্বর ও ইমেইল/মোবাইল— দুটোই দিন।" }, { status: 400 });
+    return NextResponse.json({ ok: false, error: "অর্ডার নম্বর ও ইমেইল/মোবাইল, দুটোই দিন।" }, { status: 400 });
   }
 
   const order = await db.order.findUnique({ where: { orderNumber } });

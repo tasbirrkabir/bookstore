@@ -181,7 +181,7 @@ export function CheckoutForm({
         try {
           sessionStorage.setItem(`pata_gt:${data.orderNumber}`, data.guestToken ?? "");
         } catch {
-          /* storage unavailable — order page will fall back to /track */
+          /* storage unavailable, order page will fall back to /track */
         }
         if (data.redirectUrl) {
           window.location.href = data.redirectUrl; // mock gateway page
@@ -194,7 +194,7 @@ export function CheckoutForm({
 
       toast.error(data.error ?? "অর্ডার করা যায়নি। একটু পরে আবার চেষ্টা করুন।");
     } catch {
-      toast.error("নেটওয়ার্ক সমস্যা — অর্ডার হয়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।");
+      toast.error("নেটওয়ার্ক সমস্যা, অর্ডার হয়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।");
     } finally {
       setSubmitting(false);
     }
@@ -216,7 +216,7 @@ export function CheckoutForm({
       <header className="hairline-b mt-3 pb-5">
         <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">চেকআউট</h1>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          শান্ত মনে, এক পেজে — তথ্যগুলো পূরণ করে অর্ডার নিশ্চিত করুন।
+          শান্ত মনে, এক পেজে, তথ্যগুলো পূরণ করে অর্ডার নিশ্চিত করুন।
         </p>
       </header>
 
@@ -225,7 +225,7 @@ export function CheckoutForm({
           <AlertTriangle className="text-warning" aria-hidden />
           <AlertTitle>কার্টে সমস্যাযুক্ত আইটেম আছে</AlertTitle>
           <AlertDescription>
-            কিছু আইটেম স্টকশেষ বা অপ্রাপ্য — <Link href="/cart" className="font-medium text-foreground underline underline-offset-4">কার্টে গিয়ে</Link> সেগুলো সরিয়ে বা ঠিক করে ফিরে আসুন।
+            কিছু আইটেম স্টকশেষ বা অপ্রাপ্য, <Link href="/cart" className="font-medium text-foreground underline underline-offset-4">কার্টে গিয়ে</Link> সেগুলো সরিয়ে বা ঠিক করে ফিরে আসুন।
           </AlertDescription>
         </Alert>
       ) : null}
@@ -358,7 +358,7 @@ export function CheckoutForm({
                     className="mt-1.5 min-h-20"
                     value={ship.address}
                     onChange={(e) => setShip((s) => ({ ...s, address: e.target.value }))}
-                    placeholder="বাসা/ফ্ল্যাট নম্বর, রোড, থানা — কুরিয়ার যাতে সহজে খুঁজে পায়"
+                    placeholder="বাসা/ফ্ল্যাট নম্বর, রোড, থানা, কুরিয়ার যাতে সহজে খুঁজে পায়"
                     {...setErr("address")}
                   />
                   <FieldError id="err-address" message={errors.address} />
@@ -456,7 +456,7 @@ export function CheckoutForm({
                     {quote.codEligible
                       ? "কুরিয়ার বই বুঝিয়ে দেওয়ার সময় নগদ টাকা নেবে।"
                       : quote.hasDigital
-                        ? "ডিজিটাল আইটেম থাকায় COD প্রযোজ্য নয় — ডিজিটাল অ্যাক্সেস পেমেন্ট যাচাইয়ের পরই চালু হয়।"
+                        ? "ডিজিটাল আইটেম থাকায় COD প্রযোজ্য নয়, ডিজিটাল অ্যাক্সেস পেমেন্ট যাচাইয়ের পরই চালু হয়।"
                         : "এই কার্টে COD প্রযোজ্য নয়।"}
                   </span>
                 </span>
@@ -482,7 +482,7 @@ export function CheckoutForm({
                   <span className="mt-1 block text-xs leading-5 text-muted-foreground">
                     {paymentOnlineAvailable
                       ? "নিরাপদ গেটওয়ে পেজে পেমেন্ট সম্পন্ন করতে নিয়ে যাওয়া হবে। পেমেন্ট যাচাই হওয়ার পরই অর্ডার নিশ্চিত হয়।"
-                      : "অনলাইন পেমেন্ট গেটওয়ে এখনো কনফিগার করা হয়নি — শিগগিরই আসছে।"}
+                      : "অনলাইন পেমেন্ট গেটওয়ে এখনো কনফিগার করা হয়নি, শিগগিরই আসছে।"}
                   </span>
                 </span>
               </label>
@@ -501,7 +501,7 @@ export function CheckoutForm({
             ) : (
               <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
                 <ShieldCheck className="size-3.5 text-sage" aria-hidden />
-                পেমেন্টের জন্য আমরা কখনোই পিন বা ওটিপি চাই না — পেমেন্ট হয় গেটওয়ের নিজস্ব পেজে।
+                পেমেন্টের জন্য আমরা কখনোই পিন বা ওটিপি চাই না, পেমেন্ট হয় গেটওয়ের নিজস্ব পেজে।
               </p>
             )}
           </section>
@@ -520,7 +520,7 @@ export function CheckoutForm({
                   <span className="min-w-0">
                     <span className="block truncate font-medium">{l.title}</span>
                     <span className="text-xs text-muted-foreground">
-                      × {l.quantity} — {FORMAT_LABELS[l.formatType]}
+                      × {l.quantity}, {FORMAT_LABELS[l.formatType]}
                     </span>
                   </span>
                   <span className="shrink-0 font-medium">{formatBdt(l.lineSubtotalMinor)}</span>
@@ -556,7 +556,7 @@ export function CheckoutForm({
               </div>
             </dl>
             <p className="mt-2 text-xs leading-5 text-muted-foreground">
-              মূল্য ও স্টক সার্ভারে সর্বশেষ যাচাই হয় — চূড়ান্ত হিসাব অর্ডার তৈরির সময় নিশ্চিত হবে।
+              মূল্য ও স্টক সার্ভারে সর্বশেষ যাচাই হয়, চূড়ান্ত হিসাব অর্ডার তৈরির সময় নিশ্চিত হবে।
             </p>
           </section>
 
@@ -599,7 +599,7 @@ export function CheckoutForm({
             ) : (
               <>
                 <Lock className="size-4" aria-hidden />
-                অর্ডার নিশ্চিত করুন — {formatBdt(totalMinor)}
+                অর্ডার নিশ্চিত করুন, {formatBdt(totalMinor)}
               </>
             )}
           </Button>

@@ -25,7 +25,7 @@ type PageProps = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProductBySlug(slug);
-  // Metadata resolves before the streamed shell is flushed — throwing here
+  // Metadata resolves before the streamed shell is flushed, throwing here
   // guarantees a real 404 status (not just the 404 UI).
   if (!product) notFound();
   const title = product.seoTitle || product.title;
@@ -175,7 +175,7 @@ export default async function ProductPage({ params }: PageProps) {
                     <li>ঢাকায়: {settings.deliveryEstimateInside}</li>
                     <li>ঢাকার বাইরে: {settings.deliveryEstimateOutside}</li>
                     <li>
-                      রিটার্নের সময়সীমা: {bnNum(settings.returnWindowDays)} দিন —{" "}
+                      রিটার্নের সময়সীমা: {bnNum(settings.returnWindowDays)} দিন,{" "}
                       <Link
                         href="/policies/returns"
                         className="font-medium text-primary underline underline-offset-4"

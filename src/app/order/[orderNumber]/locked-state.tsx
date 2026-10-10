@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 /**
  * Calm access-denied state for orders. Deliberately does not reveal whether the
- * order exists — the same message applies to wrong tokens and wrong numbers.
+ * order exists, the same message applies to wrong tokens and wrong numbers.
  */
 export function OrderLockedState({ orderNumber }: { orderNumber: string }) {
   return (

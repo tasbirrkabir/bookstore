@@ -23,7 +23,7 @@ export async function GET(req: Request, ctx: { params: Promise<{ entitlementId: 
   const auth = await authorizeDownload(entitlementId, token);
 
   if (!auth.ok) {
-    // Generic 403 body — never reveal which part failed or whether IDs exist.
+    // Generic 403 body, never reveal which part failed or whether IDs exist.
     return NextResponse.json({ error: auth.message }, { status: auth.reasonCode === "not_found" ? 404 : 403 });
   }
 

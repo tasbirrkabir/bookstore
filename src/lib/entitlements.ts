@@ -9,7 +9,7 @@ import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 
 // Original PDFs live OUTSIDE the public directory. Nothing here ever returns
-// a storage path or a permanent public URL — files stream through this module only.
+// a storage path or a permanent public URL, files stream through this module only.
 const PRIVATE_ROOT = path.join(process.cwd(), "private-assets");
 
 function resolvePrivatePath(relativePath: string): string | null {
@@ -20,7 +20,7 @@ function resolvePrivatePath(relativePath: string): string | null {
 
 /**
  * Grant download entitlements for every digital line of a paid order.
- * Idempotent: unique(orderItemId, assetId) + upsert — repeated calls (webhook retries,
+ * Idempotent: unique(orderItemId, assetId) + upsert, repeated calls (webhook retries,
  * reconciliation) never duplicate grants or counts.
  */
 export async function grantEntitlementsForOrder(orderId: string, grantedBy: string = "payment", reason?: string) {
@@ -28,7 +28,7 @@ export async function grantEntitlementsForOrder(orderId: string, grantedBy: stri
   if (!order) throw new Error("ORDER_NOT_FOUND");
 
   // Only paid/collected orders may receive entitlements. A browser redirect alone
-  // can never reach here — callers must have verified payment server-side.
+  // can never reach here, callers must have verified payment server-side.
   if (order.paymentStatus !== "paid" && order.paymentStatus !== "cod_collected") {
     throw new Error("ORDER_NOT_PAID");
   }
@@ -45,7 +45,7 @@ export async function grantEntitlementsForOrder(orderId: string, grantedBy: stri
 
     await db.downloadEntitlement.upsert({
       where: { orderItemId_assetId: { orderItemId: item.id, assetId: item.digitalAssetId } },
-      update: {}, // already exists — do not touch counts/expiry
+      update: {}, // already exists, do not touch counts/expiry
       create: {
         orderItemId: item.id,
         userId: order.userId,
@@ -92,7 +92,7 @@ export type DownloadAuthorization =
  *  - ownership via customer session, or guest capability token (hash compared in constant time)
  *  - paid state, active entitlement, expiry, download count, revocation
  *  - race-safe count increment + audit events
- * Returns the private file path ONLY on success — never a public URL.
+ * Returns the private file path ONLY on success, never a public URL.
  */
 export async function authorizeDownload(entitlementId: string, guestToken?: string | null): Promise<DownloadAuthorization> {
   const ent = await db.downloadEntitlement.findUnique({
