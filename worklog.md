@@ -253,3 +253,24 @@ Stage Summary:
 - The storefront no longer uses any gradient hero, icon-in-circle strip, rounded-2xl card or soft shadow: the layout grammar is now ink rules, numbered indices, stamps, framed photo plates and a marquee, which is a structure AI templates do not produce.
 - Press red joins forest green + paper + ink; press red is used only for accents (stamps, indices, highlights, buttons).
 - All four site photos are used as framed plates (hero x2, deal ticket, newsletter), all claims (counts, discounts, prices) remain grounded in the DB.
+---
+Task ID: 6
+Agent: Z.ai Code (main)
+Task: User feedback round 4: "Brutalism keno? I want minimalism". The press-style rebuild (ink borders, hard offset shadows, stamps, marquee, paper grain) read as brutalism. Rebuilt the storefront design language as quiet minimalism while keeping the photos and grounded data.
+
+Work Log:
+- globals.css: replaced the press system with a minimal token set. Warm white background #faf9f4, white cards, hairline borders #e8e4d8, gentle --radius 0.625rem, deep forest green as the single primary accent, muted terracotta #a3512e only for discount figures. Removed: paper grain overlay, marquee keyframes, rotating stamp keyframes, halftone, mark-red, rule-double, all hard offset shadow tokens. Added soft elevation tokens shadow-soft / shadow-lift / shadow-whisper. Kept cover-pattern demo covers, scroll-slim, quiet .link-press underline, focus-visible, reduced-motion.
+- layout.tsx: themeColor -> #faf9f4.
+- header-client.tsx: minimal masthead. Serif wordmark with green dari, no ink box mark. Quiet nav links with subtle underline sweep. Rounded-full search field with soft focus ring. Deep green announcement strip simplified (no notice tag box). Green pill cart badge. Default rounded dropdowns and mobile sheet rows.
+- product-card.tsx: no outer border, no stamps. Cover sits on a soft sand plate (rounded-xl, hover tint), cover gets rounded-md + shadow-lift and a gentle lift on hover. Discount shown as a small white pill, "নতুন" as a green pill. Calm type below. ProductGrid/ProductShelf spacing opened up.
+- book-cover.tsx: FormatBadges now rounded-full pills.
+- site-shell.tsx: header wrapper is hairline border + translucent backdrop blur. Footer rebuilt minimal: deep green, quiet wordmark, three link columns with small green uppercase headings, pill payment/demo chips, thin bottom line. Removed red band, barcode, boxed grid, giant wordmark.
+- newsletter-form.tsx: rounded-full input and button, added tone="onDark" variant for the green band, success/error states adapted.
+- product-purchase-panel.tsx: quantity stepper buttons rounded-none -> rounded-md.
+- page.tsx: full minimal rebuild. Hero: generous whitespace, serif headline at font-semibold with one green accent word, pill CTA + quiet text link, large rounded-2xl photo with a clean overlapping inset photo (no rotation, no stamp, no halftone). Quiet stats row. Category index kept but restyled to hairline rows with muted indices and a hover-reveal arrow. Bestsellers grid. Deal as a soft sand rounded band with the open-book photo right. Quote band now light ivory, centered. Collections as white rounded cards with hover shadow-lift. Why-Pata as hairline-topped columns. Newsletter as one deep green rounded band with shelf photo + onDark form. Arrivals shelf.
+- QA: fixed duplicate content rule in cover-pattern::after. bun run lint clean, tsc clean for src (remaining errors are pre-existing in examples/ and skills/).
+- Browser verification (agent-browser): desktop 1440 full-page walkthrough (hero, stats, category index with real counts, bestsellers with real -১৫%/-১৩% pills and নতুন badges, deal band with পদ্মার দেশ ৳৩৫০ strike ৳১,০০০, quote band, collections, why columns, newsletter, arrivals, footer); mobile 375 (hero, category rows, mobile menu sheet); product page add-to-cart toast + badge increment; newsletter E2E submit success (QA row deleted afterwards); footer bottom aligns exactly with body height on tall and short pages (no floating gap); console clean; no em or en dashes in any touched file.
+
+Stage Summary:
+- The storefront is now quiet minimalism: whitespace, hairlines, one deep green accent, calm serif weights, soft shadows, clean photography. Every brutalist element (thick ink borders, hard offset shadows, stamps, marquee, grain, rotated plates, coupon ticket) is gone.
+- All four site photos remain in use (hero x2, deal, newsletter). All claims (counts, prices, discounts) stay grounded in the DB. Cart, newsletter, product, shop pages all verified working with the new tokens.

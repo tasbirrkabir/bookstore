@@ -56,90 +56,72 @@
   --color-press-soft: var(--press-soft);
   --color-sage: var(--sage);
   --color-sage-soft: var(--sage-soft);
-  --color-marigold: var(--marigold);
-  --color-marigold-deep: var(--marigold-deep);
-  --color-marigold-soft: var(--marigold-soft);
-  --color-clay: var(--clay);
-  --color-clay-soft: var(--clay-soft);
-  --color-teal-deep: var(--teal-deep);
-  --color-teal-soft: var(--teal-soft);
-  --color-plum: var(--plum);
-  --color-plum-soft: var(--plum-soft);
   --color-hairline: var(--hairline);
-  /* Hard offset print shadows (no blur, like letterpress plates) */
-  --shadow-press: 6px 6px 0 0 var(--ink);
-  --shadow-press-sm: 4px 4px 0 0 var(--ink);
-  --shadow-press-xs: 3px 3px 0 0 var(--ink);
-  --shadow-press-red: 5px 5px 0 0 var(--press);
+  /* Soft, quiet elevation instead of hard offset plates */
+  --shadow-soft: 0 24px 50px -24px rgba(35, 34, 29, 0.28);
+  --shadow-lift: 0 10px 28px -14px rgba(35, 34, 29, 0.18);
+  --shadow-whisper: 0 1px 2px rgba(35, 34, 29, 0.05);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
 }
 
 :root {
-  /* Tight print radius: near-sharp corners everywhere */
-  --radius: 0.25rem;
+  /* Gentle radius: soft but still tailored */
+  --radius: 0.625rem;
 
-  /* Press palette: warm paper, dense ink, forest green, press red, antique gold */
-  --paper: #f5f1e6;
-  --ink: #23291f;
-  --ink-muted: #75705d;
-  --forest: #1d4a38;
-  --forest-deep: #123528;
-  --forest-soft: #e0e8de;
+  /* Minimal palette: warm white, soft ink, one deep green, quiet terracotta */
+  --paper: #f6f3ea;
+  --ink: #23221d;
+  --ink-muted: #7c7767;
+  --forest: #1f4d3a;
+  --forest-deep: #143327;
+  --forest-soft: #e4ece1;
   --gold: #a97d1f;
   --gold-deep: #7d5b12;
-  --gold-soft: #f2e7c8;
+  --gold-soft: #f2ebd3;
   --oxblood: #7a263a;
   --oxblood-deep: #5e1c2d;
   --oxblood-soft: #f3dfe0;
-  --press: #bd3d1e;
-  --press-deep: #963015;
-  --press-soft: #f6ded2;
+  --press: #a3512e;
+  --press-deep: #82401f;
+  --press-soft: #f4e3d8;
   --sage: #63715b;
   --sage-soft: #e9ecdc;
-  --marigold: #b97f10;
-  --marigold-deep: #8a5c08;
-  --marigold-soft: #f5e6c3;
-  --clay: #b4643c;
-  --clay-soft: #f6e3d4;
-  --teal-deep: #3c6b64;
-  --teal-soft: #dfeae4;
-  --plum: #5c3a5e;
-  --plum-soft: #ebe0eb;
-  --hairline: #e4dcc4;
+  --hairline: #e8e4d8;
 
-  --background: #f5f1e6;
-  --foreground: #23291f;
-  --card: #fdfbf4;
-  --card-foreground: #23291f;
-  --popover: #fdfbf4;
-  --popover-foreground: #23291f;
-  --primary: #1d4a38;
-  --primary-foreground: #f5f2e7;
-  --secondary: #eef0e4;
+  --background: #faf9f4;
+  --foreground: #23221d;
+  --card: #ffffff;
+  --card-foreground: #23221d;
+  --popover: #ffffff;
+  --popover-foreground: #23221d;
+  --primary: #1f4d3a;
+  --primary-foreground: #f2f6ef;
+  --secondary: #eef0e6;
   --secondary-foreground: #2c4a3c;
-  --muted: #ebe4d0;
-  --muted-foreground: #75705d;
-  --accent: #f2e7c8;
-  --accent-foreground: #6b5218;
-  --destructive: #a13232;
-  --border: #e4dcc4;
-  --input: #d8cfb4;
-  --ring: #1d4a38;
+  --muted: #f1eee5;
+  --muted-foreground: #7c7767;
+  --accent: #f2efe4;
+  --accent-foreground: #4f4a3c;
+  --destructive: #a34a32;
+  --border: #e8e4d8;
+  --input: #ddd8c9;
+  --ring: #1f4d3a;
   --success: #3d6b4f;
   --success-foreground: #f2f7f0;
   --warning: #946200;
   --warning-foreground: #fff9ec;
-  --sidebar: #fdfbf4;
-  --sidebar-foreground: #23291f;
-  --sidebar-primary: #1d4a38;
-  --sidebar-primary-foreground: #f5f2e7;
-  --sidebar-accent: #ebe4d0;
-  --sidebar-accent-foreground: #23291f;
-  --sidebar-border: #e4dcc4;
-  --sidebar-ring: #1d4a38;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #23221d;
+  --sidebar-primary: #1f4d3a;
+  --sidebar-primary-foreground: #f2f6ef;
+  --sidebar-accent: #f1eee5;
+  --sidebar-accent-foreground: #23221d;
+  --sidebar-border: #e8e4d8;
+  --sidebar-ring: #1f4d3a;
 }
 
 @layer base {
@@ -149,24 +131,14 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "liga" 1, "kern" 1;
-  }
-  /* Paper grain over the whole page, like a risograph print */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 90;
-    pointer-events: none;
-    opacity: 0.045;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+    text-rendering: optimizeLegibility;
   }
   ::selection {
-    background: rgba(189, 61, 30, 0.22);
+    background: rgba(31, 77, 58, 0.16);
   }
 }
 
-/* ─── Flat color blocks (no gradients, print plates) ───────────────────── */
+/* ─── Quiet color blocks ─────────────────────────────────────────────── */
 
 .bg-forest {
   background: var(--forest);
@@ -181,10 +153,14 @@
 }
 
 .bg-ivory {
-  background: #f9f5ea;
+  background: #f4f1e7;
 }
 
-/* Hairline dividers used across the editorial layout */
+.bg-sand {
+  background: #f1ede2;
+}
+
+/* Hairline dividers used across the layout */
 .hairline-t {
   border-top: 1px solid var(--hairline);
 }
@@ -192,59 +168,17 @@
   border-bottom: 1px solid var(--hairline);
 }
 
-/* Double newspaper rule */
-.rule-double {
-  border-top: 3px double var(--ink);
-}
-
-/* Red marker highlight behind headline words */
-.mark-red {
-  background-image: linear-gradient(rgba(189, 61, 30, 0.26), rgba(189, 61, 30, 0.26));
-  background-repeat: no-repeat;
-  background-size: 100% 0.34em;
-  background-position: 0 90%;
-}
-
-/* Halftone dot patch (decoration behind photo plates) */
-.halftone {
-  background-image: radial-gradient(currentColor 1.1px, transparent 1.2px);
-  background-size: 9px 9px;
-}
-
-/* Underline sweep for editorial links */
+/* Understated underline sweep for quiet links */
 .link-press {
   background-image: linear-gradient(currentColor, currentColor);
-  background-size: 0% 2px;
+  background-size: 0% 1px;
   background-repeat: no-repeat;
-  background-position: 0 97%;
-  transition: background-size 0.25s ease;
+  background-position: 0 96%;
+  transition: background-size 0.3s ease;
 }
 .link-press:hover,
 .link-press:focus-visible {
-  background-size: 100% 2px;
-}
-
-/* Ticker marquee */
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-.animate-marquee {
-  animation: marquee 42s linear infinite;
-}
-.marquee-hover:hover .animate-marquee {
-  animation-play-state: paused;
-}
-
-/* Slow rotation for the circular stamp */
-@keyframes rotate-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.animate-rotate-slow {
-  animation: rotate-slow 26s linear infinite;
+  background-size: 100% 1px;
 }
 
 /* Focus visibility for keyboard users */
@@ -261,10 +195,6 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-  .animate-marquee,
-  .animate-rotate-slow {
-    animation: none !important;
   }
 }
 
@@ -325,7 +255,7 @@
   height: 6px;
 }
 .scroll-slim::-webkit-scrollbar-thumb {
-  background: #d6c6a2;
+  background: #d9d4c4;
   border-radius: 999px;
 }
 .scroll-slim::-webkit-scrollbar-track {

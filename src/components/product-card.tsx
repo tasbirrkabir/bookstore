@@ -6,10 +6,9 @@ import { bnNum } from "@/components/catalog-shared";
 import type { ProductCardDTO } from "@/lib/catalog";
 
 /**
- * Shared product card. Only grounded labels are shown:
- * - "নতুন" when the admin flagged the title as a new arrival;
- * - a real "-X%" chip plus strike-through compare-at price when an active
- *   variant genuinely carries a compare-at amount.
+ * Shared product card, kept deliberately quiet: a soft plate behind the
+ * cover, calm type below, no stamps or heavy frames. Only grounded labels
+ * are shown ("নতুন", a real -X% pill with strike-through compare-at price).
  * Whole card links to /product/[slug].
  */
 export function ProductCard({
@@ -27,44 +26,43 @@ export function ProductCard({
   return (
     <Link
       href={`/product/${product.slug}`}
-      className={cn(
-        "group flex h-full flex-col overflow-hidden border-[1.5px] border-ink bg-card transition-[transform,box-shadow] duration-200 hover:-translate-x-[3px] hover:-translate-y-[3px] hover:shadow-press-xs",
-        className
-      )}
+      className={cn("group flex h-full flex-col", className)}
     >
-      <div className="relative p-2.5 pb-0">
+      <div className="relative rounded-xl bg-sand p-5 transition-colors duration-300 group-hover:bg-[#eceadf]">
         {deal ? (
-          <span className="absolute left-4 top-4 z-10 -rotate-3 border border-ink/30 bg-press px-1.5 py-0.5 font-mono text-[10px] font-bold tracking-wide text-paper shadow-press-xs">
+          <span className="absolute left-3.5 top-3.5 z-10 rounded-full bg-card/95 px-2.5 py-1 text-[11px] font-semibold text-press shadow-whisper">
             -{bnNum(product.discountPercent ?? 0)}%
           </span>
         ) : product.newArrival ? (
-          <span className="absolute left-4 top-4 z-10 rotate-2 bg-ink px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-paper">
+          <span className="absolute left-3.5 top-3.5 z-10 rounded-full bg-forest px-2.5 py-1 text-[11px] font-medium text-primary-foreground">
             নতুন
           </span>
         ) : null}
-        <BookCover
-          title={product.title}
-          author={product.authorDisplay}
-          coverImage={product.coverImage}
-          coverPattern={product.coverPattern}
-          size="md"
-          priority={priority}
-          className="relative z-[1] rounded-none border border-ink/25 shadow-none transition-transform duration-200 group-hover:-translate-y-0.5"
-        />
+        <div className="mx-auto w-[72%] transition-transform duration-300 ease-out group-hover:-translate-y-1">
+          <BookCover
+            title={product.title}
+            author={product.authorDisplay}
+            coverImage={product.coverImage}
+            coverPattern={product.coverPattern}
+            size="md"
+            priority={priority}
+            className="rounded-md shadow-lift"
+          />
+        </div>
       </div>
-      <div className="mt-2.5 flex flex-1 flex-col border-t border-hairline px-3 pb-3 pt-2.5">
-        <h3 className="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-snug text-foreground">
+      <div className="flex flex-1 flex-col px-0.5 pb-1 pt-3.5">
+        <h3 className="line-clamp-2 min-h-[2.6rem] text-sm font-medium leading-snug text-foreground">
           {product.title}
         </h3>
         <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{product.authorDisplay}</p>
         <div className="mt-auto pt-2.5">
           {product.minPriceMinor != null ? (
             <p className="flex flex-wrap items-baseline gap-x-1.5">
-              <span className="text-[15px] font-bold text-foreground">
+              <span className="text-[15px] font-semibold text-foreground">
                 {formatBdt(product.minPriceMinor)}
               </span>
               {deal ? (
-                <span className="font-mono text-xs text-press line-through">
+                <span className="text-xs text-muted-foreground line-through">
                   {formatBdt(product.compareAtMinor!)}
                 </span>
               ) : null}
@@ -91,7 +89,7 @@ export function ProductGrid({
   return (
     <div
       className={cn(
-        "grid grid-cols-2 gap-4 md:gap-6",
+        "grid grid-cols-2 gap-x-5 gap-y-9 md:gap-x-6",
         colsClass ?? "md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5",
         className
       )}
@@ -112,7 +110,7 @@ export function ProductShelf({
   className?: string;
 }) {
   return (
-    <div className={cn("flex gap-4 overflow-x-auto pb-3 scroll-slim md:gap-5", className)}>
+    <div className={cn("flex gap-5 overflow-x-auto pb-3 scroll-slim md:gap-6", className)}>
       {products.map((p, i) => (
         <ProductCard
           key={p.id}

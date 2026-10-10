@@ -100,7 +100,7 @@ export function FormatBadges({ formats, className }: { formats: string[]; classN
       {items.map(({ key, label, Icon }) => (
         <span
           key={key}
-          className="inline-flex items-center gap-1 rounded-sm border border-hairline bg-card px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground"
+          className="inline-flex items-center gap-1 rounded-full border border-hairline bg-card px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
         >
           <Icon className="size-3" aria-hidden />
           {label}

@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, MailCheck, Send } from "lucide-react";
+import { Loader2, MailCheck, ArrowRight } from "lucide-react";
 
 /**
  * Newsletter subscribe form for the home page band.
  * Posts to /api/newsletter; success and errors are shown inline.
+ * tone="onDark" adapts colors for the deep green newsletter band.
  */
-export function NewsletterForm() {
+export function NewsletterForm({ tone = "light" }: { tone?: "light" | "onDark" }) {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "busy" | "done" | "error">("idle");
   const [message, setMessage] = useState<string | null>(null);
@@ -39,16 +40,27 @@ export function NewsletterForm() {
 
   if (state === "done") {
     return (
-      <div className="flex items-center gap-3 border-[1.5px] border-ink bg-forest-soft px-4 py-3.5 text-sm text-forest-deep">
+      <div
+        className={
+          tone === "onDark"
+            ? "flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3.5 text-sm text-[#eef4ea]"
+            : "flex items-center gap-3 rounded-xl bg-forest-soft px-4 py-3.5 text-sm text-forest-deep"
+        }
+      >
         <MailCheck aria-hidden className="size-5 shrink-0 text-forest" />
         <p>ধন্যবাদ! নতুন বই আর অফারের খবর সবার আগে পাবেন।</p>
       </div>
     );
   }
 
+  const inputClass =
+    tone === "onDark"
+      ? "h-12 flex-1 rounded-full border border-white/20 bg-white/10 px-5 text-sm text-white placeholder:text-white/50 outline-none transition-colors focus:border-white/50"
+      : "h-12 flex-1 rounded-full border border-border bg-card px-5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-forest/50";
+
   return (
     <form onSubmit={onSubmit} className="space-y-2" noValidate>
-      <div className="flex flex-col gap-2 sm:flex-row">
+      <div className="flex flex-col gap-2.5 sm:flex-row">
         <label htmlFor="newsletter-email" className="sr-only">
           ইমেইল ঠিকানা
         </label>
@@ -60,27 +72,35 @@ export function NewsletterForm() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="আপনার ইমেইল ঠিকানা"
           autoComplete="email"
-          className="h-11 flex-1 border-[1.5px] border-ink bg-background px-3.5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-shadow focus:shadow-press-xs"
+          className={inputClass}
         />
         <button
           type="submit"
           disabled={state === "busy"}
-          className="inline-flex h-11 items-center justify-center gap-2 border-[1.5px] border-ink bg-press px-6 text-sm font-bold text-paper transition-colors hover:bg-press-deep disabled:opacity-60"
+          className={
+            tone === "onDark"
+              ? "inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#f2f4ea] px-7 text-sm font-semibold text-forest-deep transition-colors hover:bg-white disabled:opacity-60"
+              : "inline-flex h-12 items-center justify-center gap-2 rounded-full bg-forest px-7 text-sm font-semibold text-primary-foreground transition-colors hover:bg-forest-deep disabled:opacity-60"
+          }
         >
           {state === "busy" ? (
             <Loader2 aria-hidden className="size-4 animate-spin" />
           ) : (
-            <Send aria-hidden className="size-4" />
+            <ArrowRight aria-hidden className="size-4" />
           )}
           সাবস্ক্রাইব
         </button>
       </div>
       {state === "error" && message ? (
-        <p role="alert" className="text-xs font-semibold text-press-deep">
+        <p role="alert" className={
+          tone === "onDark" ? "text-xs font-medium text-[#f0c9b5]" : "text-xs font-medium text-press-deep"
+        }>
           {message}
         </p>
       ) : (
-        <p className="text-xs text-muted-foreground">শুধু বই আর পড়ার খবর, বাড়তি মেইল নয়।</p>
+        <p className={tone === "onDark" ? "text-xs text-white/55" : "text-xs text-muted-foreground"}>
+          শুধু বই আর পড়ার খবর, বাড়তি মেইল নয়।
+        </p>
       )}
     </form>
   );

@@ -187,7 +187,7 @@ export function ProductPurchaseSection({
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="size-11 rounded-none"
+                className="size-11 rounded-md"
                 disabled={isDigital || effectiveQty <= 1}
                 aria-label="পরিমাণ কমান"
                 onClick={() => setStepperQty((q) => clampQty(q - 1, maxQty))}
@@ -201,7 +201,7 @@ export function ProductPurchaseSection({
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="size-11 rounded-none"
+                className="size-11 rounded-md"
                 disabled={isDigital || effectiveQty >= maxQty}
                 aria-label="পরিমাণ বাড়ান"
                 onClick={() => setStepperQty((q) => clampQty(q + 1, maxQty))}
