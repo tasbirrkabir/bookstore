@@ -1,0 +1,418 @@
+// PATA Bookstore — commerce schema (SQLite via Prisma)
+// Money is stored as INTEGER minor units (poisha, 1 BDT = 100 poisha) everywhere.
+// Enum-like fields are strings validated in application code (Prisma+SQLite does not support enums).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Users & auth ────────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  phone        String?
+  passwordHash String?
+  role         String   @default("customer") // "customer" | "admin" (server-checked)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  orders       Order[]
+  entitlements DownloadEntitlement[]
+  carts        Cart[]
+}
+
+// ─── Store settings (single row, id="main") ──────────────────────────────────
+
+model StoreSetting {
+  id                      String   @id @default("main")
+  storeName               String   @default("পাতা")
+  storeNameEn             String   @default("PATA")
+  tagline                 String   @default("বইয়ের নিজস্ব ঠিকানা")
+  supportEmail            String   @default("support@pata.example")
+  supportPhone            String   @default("+880 1XXX-XXXXXX")
+  addressLine             String   @default("ঢাকা, বাংলাদেশ")
+  facebookUrl             String?
+  announcement            String?
+  announcementEnabled     Boolean  @default(false)
+  shippingInsideDhaka     Int      @default(7000) // poisha
+  shippingOutsideDhaka    Int      @default(13000)
+  freeShippingThreshold   Int? // poisha, null = disabled
+  deliveryEstimateInside  String   @default("ঢাকায় সাধারণত ২–৪ দিন")
+  deliveryEstimateOutside String   @default("ঢাকার বাইরে সাধারণত ৩–৭ দিন")
+  downloadLimitDefault    Int      @default(5)
+  downloadExpiryDays      Int      @default(365)
+  paymentProvider         String   @default("disabled") // "disabled" | "mock" (dev-only)
+  codEnabled              Boolean  @default(true)
+  returnWindowDays        Int      @default(7)
+  aboutText               String?
+  updatedAt               DateTime @updatedAt
+}
+
+// ─── Catalog ─────────────────────────────────────────────────────────────────
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String // Bengali display name
+  nameEn      String?
+  description String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+
+  products ProductCategory[]
+}
+
+model Collection {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String?
+  sortOrder   Int      @default(0)
+  isActive    Boolean  @default(true)
+
+  products CollectionProduct[]
+}
+
+model Product {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  titleEn         String?
+  subtitle        String?
+  authorDisplay   String
+  translator      String?
+  publisher       String?
+  isbn            String?
+  language        String   @default("bn") // "bn" | "en"
+  publicationYear Int?
+  pageCount       Int?
+  binding         String?
+  edition         String?
+  description     String   @default("")
+  status          String   @default("draft") // "draft" | "published" | "archived"
+  featured        Boolean  @default(false)
+  newArrival      Boolean  @default(false)
+  editorPick      Boolean  @default(false)
+  coverImage      String? // public URL (uploaded asset). null → CSS demo cover
+  coverPattern    String   @default("oxblood") // CSS pattern key for demo covers
+  seoTitle        String?
+  seoDescription  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  categories ProductCategory[]
+  collections CollectionProduct[]
+  variants   ProductVariant[]
+  assets     Asset[]
+}
+
+model ProductVariant {
+  id                 String    @id @default(cuid())
+  productId          String
+  product            Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  formatType         String // "physical" | "digital" | "bundle"
+  sku                String?   @unique
+  priceMinor         Int
+  compareAtPriceMinor Int? // only legitimate reference pricing
+  currency           String    @default("BDT")
+  isActive           Boolean   @default(true)
+  stockOnHand        Int? // physical/bundle only; null for digital
+  weightGrams        Int?
+  digitalAssetId     String?
+  digitalAsset       Asset?    @relation(fields: [digitalAssetId], references: [id], onDelete: SetNull)
+  downloadLimit      Int? // null → store default
+  downloadExpiryDays Int? // null → store default
+  rightsConfirmedAt  DateTime?
+  rightsConfirmedBy  String?
+  sortOrder          Int       @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  cartItems          CartItem[]
+  inventoryMovements InventoryMovement[]
+}
+
+model ProductCategory {
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+}
+
+model CollectionProduct {
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  productId    String
+  product      Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  sortOrder    Int        @default(0)
+
+  @@id([collectionId, productId])
+}
+
+// ─── Assets (covers public, PDFs PRIVATE) ────────────────────────────────────
+
+model Asset {
+  id                String    @id @default(cuid())
+  productId         String?
+  product           Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+  kind              String // "cover" | "gallery" | "public_preview" | "private_pdf"
+  storageProvider   String    @default("local")
+  bucket            String    @default("pata-assets")
+  storagePath       String // relative path on disk. NEVER exposed publicly for private_pdf
+  originalFilename  String?
+  mimeType          String?
+  sizeBytes         Int?
+  isPrivate         Boolean   @default(false)
+  rightsConfirmedAt DateTime?
+  rightsConfirmedBy String?
+  createdAt         DateTime  @default(now())
+
+  variants      ProductVariant[]
+  entitlements  DownloadEntitlement[]
+}
+
+// ─── Cart ────────────────────────────────────────────────────────────────────
+
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  couponCode String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items CartItem[]
+}
+
+model CartItem {
+  id        String         @id @default(cuid())
+  cartId    String
+  cart      Cart           @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  quantity  Int            @default(1)
+
+  @@unique([cartId, variantId])
+}
+
+// ─── Orders ──────────────────────────────────────────────────────────────────
+
+model Order {
+  id                 String    @id @default(cuid())
+  orderNumber        String    @unique // human-readable, non-sequential; NOT an auth credential
+  userId             String?
+  user               User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  guestEmail         String?
+  guestPhone         String?
+  guestTokenHash     String? // sha256 of capability token — never stored plaintext
+  guestTokenExpiresAt DateTime?
+  status             String    @default("pending_payment") // pending_payment|confirmed|processing|shipped|delivered|cancelled|returned|refunded
+  paymentStatus      String    @default("unpaid") // unpaid|pending|paid|failed|cod_due|cod_collected|refunded
+  currency           String    @default("BDT")
+  subtotalMinor      Int
+  discountMinor      Int       @default(0)
+  shippingMinor      Int       @default(0)
+  totalMinor         Int
+  couponCode         String?
+  couponSnapshot     String? // JSON snapshot of coupon rules at purchase time
+  contactName        String
+  contactPhone       String
+  contactEmail       String?
+  shippingName       String?
+  shippingPhone      String?
+  shippingDistrict   String?
+  shippingArea       String?
+  shippingAddress    String?
+  shippingPostcode   String?
+  shippingZone       String? // inside_dhaka | outside_dhaka
+  shippingNote       String?
+  customerNote       String?
+  adminNote          String? // private, never shown to customers
+  courierProvider    String?
+  trackingId         String?
+  isDemo             Boolean   @default(false)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  items        OrderItem[]
+  payments     Payment[]
+  events       OrderEvent[]
+  redemptions  CouponRedemption[]
+  notifications NotificationOutbox[]
+}
+
+model OrderItem {
+  id                 String   @id @default(cuid())
+  orderId            String
+  order              Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId          String?
+  variantId          String?
+  productSlug        String?
+  productTitle       String // immutable snapshots
+  authorDisplay      String
+  formatType         String
+  sku                String?
+  unitPriceMinor     Int
+  quantity           Int
+  lineSubtotalMinor  Int
+  lineDiscountMinor  Int      @default(0)
+  lineTotalMinor     Int
+  digitalAssetId     String?
+  coverImage         String?
+  coverPattern       String?
+  createdAt          DateTime @default(now())
+
+  entitlements DownloadEntitlement[]
+}
+
+model OrderEvent {
+  id         String   @id @default(cuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  type       String // status_change | payment | note | tracking
+  fromStatus String?
+  toStatus   String?
+  message    String?
+  actor      String   @default("system") // system | admin:<email> | customer
+  createdAt  DateTime @default(now())
+}
+
+// ─── Payments ────────────────────────────────────────────────────────────────
+
+model Payment {
+  id             String    @id @default(cuid())
+  orderId        String
+  order          Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider       String // "mock" | gateway names
+  providerTxnId  String?
+  idempotencyKey String    @unique
+  amountMinor    Int
+  currency       String    @default("BDT")
+  method         String? // bkash | nagad | card | cod ...
+  status         String    @default("initiated") // initiated|pending|paid|failed|refunded
+  metaJson       String? // redacted provider metadata
+  verifiedAt     DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([provider, providerTxnId])
+}
+
+// ─── Digital entitlements & downloads ────────────────────────────────────────
+
+model DownloadEntitlement {
+  id            String    @id @default(cuid())
+  orderItemId   String
+  orderItem     OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  assetId       String
+  asset         Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  status        String    @default("active") // active|expired|revoked
+  maxDownloads  Int
+  downloadCount Int       @default(0)
+  expiresAt     DateTime?
+  grantedBy     String    @default("payment") // payment | admin_comp
+  grantReason   String?
+  createdAt     DateTime  @default(now())
+  revokedAt     DateTime?
+
+  events DownloadEvent[]
+
+  @@unique([orderItemId, assetId])
+}
+
+model DownloadEvent {
+  id            String   @id @default(cuid())
+  entitlementId String
+  entitlement   DownloadEntitlement @relation(fields: [entitlementId], references: [id], onDelete: Cascade)
+  result        String // authorized | denied | issued
+  reasonCode    String?
+  createdAt     DateTime @default(now())
+}
+
+// ─── Inventory audit trail ───────────────────────────────────────────────────
+
+model InventoryMovement {
+  id            String         @id @default(cuid())
+  variantId     String
+  variant       ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  orderId       String?
+  type          String // reserve|sale|release|restock|adjustment
+  quantityDelta Int
+  actor         String         @default("system")
+  reason        String?
+  createdAt     DateTime       @default(now())
+}
+
+// ─── Coupons ─────────────────────────────────────────────────────────────────
+
+model Coupon {
+  id               String    @id @default(cuid())
+  code             String    @unique
+  description      String?
+  discountType     String // "percent" | "fixed"
+  discountValue    Int // percent (1–100) or poisha for fixed
+  minSpendMinor    Int?
+  maxDiscountMinor Int?
+  appliesToFormat  String? // null = all | physical | digital | bundle
+  startsAt         DateTime?
+  endsAt           DateTime?
+  usageLimit       Int?
+  usageCount       Int       @default(0)
+  isActive         Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+
+  redemptions CouponRedemption[]
+}
+
+model CouponRedemption {
+  id          String   @id @default(cuid())
+  couponId    String
+  coupon      Coupon   @relation(fields: [couponId], references: [id], onDelete: Cascade)
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  amountMinor Int
+  createdAt   DateTime @default(now())
+
+  @@unique([couponId, orderId])
+}
+
+// ─── Notifications (email outbox) ────────────────────────────────────────────
+
+model NotificationOutbox {
+  id             String    @id @default(cuid())
+  orderId        String?
+  order          Order?    @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  kind           String // order_placed|payment_confirmed|payment_failed|digital_ready|shipped|delivered|cancelled|admin_alert
+  toEmail        String
+  toName         String?
+  subject        String
+  body           String
+  status         String    @default("pending") // pending|sent|failed|skipped_no_provider
+  statusDetail   String? // e.g. "Email provider not configured (EMAIL_PROVIDER_API_KEY missing)"
+  attempts       Int       @default(0)
+  createdAt      DateTime  @default(now())
+  sentAt         DateTime?
+}
+
+// ─── Admin audit log ─────────────────────────────────────────────────────────
+
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  actorEmail String
+  action     String
+  targetType String?
+  targetId   String?
+  detail     String?
+  createdAt  DateTime @default(now())
+}

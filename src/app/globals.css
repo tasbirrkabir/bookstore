@@ -1,0 +1,199 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body), var(--font-bengali), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-bengali-serif), Georgia, serif;
+  --font-bengali: var(--font-bengali), sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-oxblood: var(--oxblood);
+  --color-oxblood-deep: var(--oxblood-deep);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-hairline: var(--hairline);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Editorial bookstore palette — warm paper, dark ink, restrained accents */
+  --paper: #f7f4ee;
+  --ink: #242520;
+  --ink-muted: #77766e;
+  --oxblood: #7a263a;
+  --oxblood-deep: #5e1c2d;
+  --sage: #63715b;
+  --sage-soft: #eef0e8;
+  --hairline: #e4ded4;
+
+  --background: #f7f4ee;
+  --foreground: #242520;
+  --card: #fffefb;
+  --card-foreground: #242520;
+  --popover: #fffefb;
+  --popover-foreground: #242520;
+  --primary: #7a263a;
+  --primary-foreground: #fdf8f5;
+  --secondary: #eef0e8;
+  --secondary-foreground: #3d4238;
+  --muted: #f1ede4;
+  --muted-foreground: #77766e;
+  --accent: #eef0e8;
+  --accent-foreground: #44503c;
+  --destructive: #a13232;
+  --border: #e4ded4;
+  --input: #ddd6c9;
+  --ring: #7a263a;
+  --success: #3d6b4f;
+  --success-foreground: #f2f7f0;
+  --warning: #946200;
+  --warning-foreground: #fff9ec;
+  --sidebar: #fffefb;
+  --sidebar-foreground: #242520;
+  --sidebar-primary: #7a263a;
+  --sidebar-primary-foreground: #fdf8f5;
+  --sidebar-accent: #f1ede4;
+  --sidebar-accent-foreground: #242520;
+  --sidebar-border: #e4ded4;
+  --sidebar-ring: #7a263a;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+  ::selection {
+    background: #7a263a22;
+  }
+}
+
+/* Hairline dividers used across the editorial layout */
+.hairline-t {
+  border-top: 1px solid var(--hairline);
+}
+.hairline-b {
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--oxblood);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Demo book cover patterns (CSS-generated, fictional demo books) ─── */
+
+.cover-pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-oxblood {
+  background: linear-gradient(160deg, #7a263a 0%, #5e1c2d 62%, #4a1624 100%);
+}
+.cover-sage {
+  background: linear-gradient(160deg, #63715b 0%, #525e4b 62%, #424c3d 100%);
+}
+.cover-ink {
+  background: linear-gradient(160deg, #35352e 0%, #242520 62%, #1a1a17 100%);
+}
+.cover-clay {
+  background: linear-gradient(160deg, #b4643c 0%, #96512f 62%, #7c4227 100%);
+}
+.cover-mustard {
+  background: linear-gradient(160deg, #b58a3c 0%, #96722f 62%, #7c5f27 100%);
+}
+.cover-teal {
+  background: linear-gradient(160deg, #3c6b64 0%, #2f5650 62%, #264540 100%);
+}
+.cover-plum {
+  background: linear-gradient(160deg, #5c3a5e 0%, #4b2f4d 62%, #3d263f 100%);
+}
+
+/* Decorative spine + texture on demo covers */
+.cover-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 254, 251, 0.14) 0%, rgba(255, 254, 251, 0.05) 3%, transparent 6%),
+    radial-gradient(120% 90% at 85% 8%, rgba(255, 254, 251, 0.1) 0%, transparent 52%);
+  pointer-events: none;
+}
+.cover-pattern::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 7%;
+  bottom: 7%;
+  left: 7%;
+  right: 7%;
+  border: 1px solid rgba(255, 254, 251, 0.28);
+  pointer-events: none;
+}
+
+/* Thin custom scrollbar for long lists */
+.scroll-slim::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: #d8d1c2;
+  border-radius: 999px;
+}
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
