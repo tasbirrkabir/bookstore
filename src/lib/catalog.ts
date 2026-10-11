@@ -268,13 +268,18 @@ export async function getRelatedProducts(product: ProductCardDTO, limit = 4): Pr
 }
 
 export async function listCategories() {
-  return db.category.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-    include: { _count: { select: { products: { where: { product: { status: "published" } } } } } },
-  }).then((rows) =>
-    rows.map((c) => ({ id: c.id, slug: c.slug, name: c.name, nameEn: c.nameEn, description: c.description, productCount: c._count.products }))
-  );
+  try {
+    return await db.category.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+      include: { _count: { select: { products: { where: { product: { status: "published" } } } } } },
+    }).then((rows) =>
+      rows.map((c) => ({ id: c.id, slug: c.slug, name: c.name, nameEn: c.nameEn, description: c.description, productCount: c._count.products }))
+    );
+  } catch (err) {
+    console.error("[catalog] listCategories error:", err);
+    return [];
+  }
 }
 
 export async function getCategoryBySlug(slug: string) {
@@ -304,18 +309,28 @@ export async function listCollectionsWithProducts(limit = 2) {
 }
 
 export async function homeModules() {
-  const [featured, newArrivals, collections, categories] = await Promise.all([
-    db.product.findMany({ where: { status: "published", OR: [{ featured: true }, { editorPick: true }] }, include: cardInclude, take: 8, orderBy: { createdAt: "desc" } }),
-    db.product.findMany({ where: { status: "published", newArrival: true }, include: cardInclude, take: 8, orderBy: { createdAt: "desc" } }),
-    listCollectionsWithProducts(2),
-    listCategories(),
-  ]);
-  return {
-    featured: featured.map(toCard),
-    newArrivals: newArrivals.map(toCard),
-    collections,
-    categories,
-  };
+  try {
+    const [featured, newArrivals, collections, categories] = await Promise.all([
+      db.product.findMany({ where: { status: "published", OR: [{ featured: true }, { editorPick: true }] }, include: cardInclude, take: 8, orderBy: { createdAt: "desc" } }),
+      db.product.findMany({ where: { status: "published", newArrival: true }, include: cardInclude, take: 8, orderBy: { createdAt: "desc" } }),
+      listCollectionsWithProducts(2),
+      listCategories(),
+    ]);
+    return {
+      featured: featured.map(toCard),
+      newArrivals: newArrivals.map(toCard),
+      collections,
+      categories,
+    };
+  } catch (err) {
+    console.error("[catalog] homeModules error:", err);
+    return {
+      featured: [],
+      newArrivals: [],
+      collections: [],
+      categories: [],
+    };
+  }
 }
 
 /** The published variant with the biggest genuine markdown, for the deal banner. */
@@ -325,26 +340,31 @@ export async function findDealProduct(): Promise<{
   compareAtMinor: number;
   discountPercent: number;
 } | null> {
-  const rows = await db.product.findMany({
-    where: { status: "published", variants: { some: { isActive: true, compareAtPriceMinor: { gt: 0 } } } },
-    include: cardInclude,
-    take: 30,
-    orderBy: { createdAt: "desc" },
-  });
+  try {
+    const rows = await db.product.findMany({
+      where: { status: "published", variants: { some: { isActive: true, compareAtPriceMinor: { gt: 0 } } } },
+      include: cardInclude,
+      take: 30,
+      orderBy: { createdAt: "desc" },
+    });
 
-  let best: { card: ProductCardDTO; priceMinor: number; compareAtMinor: number; discountPercent: number } | null = null;
-  for (const p of rows) {
-    for (const v of p.variants) {
-      if (!v.isActive || !v.compareAtPriceMinor || v.compareAtPriceMinor <= v.priceMinor) continue;
-      const percent = Math.round(((v.compareAtPriceMinor - v.priceMinor) / v.compareAtPriceMinor) * 100);
-      const saving = v.compareAtPriceMinor - v.priceMinor;
-      const bestSaving = best ? best.compareAtMinor - best.priceMinor : -1;
-      if (saving > bestSaving) {
-        best = { card: toCard(p), priceMinor: v.priceMinor, compareAtMinor: v.compareAtPriceMinor, discountPercent: percent };
+    let best: { card: ProductCardDTO; priceMinor: number; compareAtMinor: number; discountPercent: number } | null = null;
+    for (const p of rows) {
+      for (const v of p.variants) {
+        if (!v.isActive || !v.compareAtPriceMinor || v.compareAtPriceMinor <= v.priceMinor) continue;
+        const percent = Math.round(((v.compareAtPriceMinor - v.priceMinor) / v.compareAtPriceMinor) * 100);
+        const saving = v.compareAtPriceMinor - v.priceMinor;
+        const bestSaving = best ? best.compareAtMinor - best.priceMinor : -1;
+        if (saving > bestSaving) {
+          best = { card: toCard(p), priceMinor: v.priceMinor, compareAtMinor: v.compareAtPriceMinor, discountPercent: percent };
+        }
       }
     }
+    return best;
+  } catch (err) {
+    console.error("[catalog] findDealProduct error:", err);
+    return null;
   }
-  return best;
 }
 
 /** Distinct author list for filters. */
