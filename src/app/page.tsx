@@ -12,34 +12,29 @@ export const dynamic = "force-dynamic";
 
 const BN_DIGITS = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
 
-/** Two-digit Bengali numeral for the category index. */
+/** Two-digit Bengali numeral for the why-section indices. */
 function bnPad(n: number) {
   return String(n).padStart(2, "0").replace(/\d/g, (d) => BN_DIGITS[Number(d)]);
 }
 
-/* Quiet section header: small kicker, calm serif title, optional link. */
+/* Quiet section header: calm serif title, optional link. */
 function SectionHead({
-  kicker,
   title,
   link,
 }: {
-  kicker: string;
   title: string;
   link?: { href: string; text: string };
 }) {
   return (
     <div className="mb-10 border-t border-hairline pt-8">
       <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-        <div>
-          <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-muted-foreground">{kicker}</p>
-          <h2 className="mt-2 font-bengali-serif text-[1.65rem] font-semibold leading-tight tracking-tight md:text-[1.9rem]">
-            {title}
-          </h2>
-        </div>
+        <h2 className="font-bengali-serif text-[1.65rem] font-semibold leading-tight tracking-tight md:text-[1.9rem]">
+          {title}
+        </h2>
         {link ? (
           <Link
             href={link.href}
-            className="link-press inline-flex items-center gap-1.5 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
+            className="link-press inline-flex items-center gap-1.5 pb-1 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
           >
             {link.text}
             <ArrowRight aria-hidden className="size-4" />
@@ -62,14 +57,10 @@ export default async function HomePage() {
     <div>
       {/* ── Hero: generous whitespace, calm serif, clean photography ─────── */}
       <section className="overflow-x-clip">
-        <div className="mx-auto w-full max-w-6xl px-4 pb-8 pt-12 sm:px-6 md:pb-10 md:pt-20 lg:px-8">
+        <div className="mx-auto w-full max-w-6xl px-4 pb-8 pt-14 sm:px-6 md:pb-10 md:pt-24 lg:px-8">
           <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-6">
-              <p className="flex items-center gap-2.5 text-[12px] font-medium uppercase tracking-[0.26em] text-muted-foreground">
-                <span aria-hidden className="inline-block size-1.5 rounded-full bg-forest" />
-                স্বাধীন বইয়ের দোকান
-              </p>
-              <h1 className="mt-6 font-bengali-serif text-[2.35rem] font-semibold leading-[1.22] tracking-tight text-foreground md:text-[3.1rem] lg:text-[3.5rem] lg:leading-[1.18]">
+              <h1 className="font-bengali-serif text-[2.35rem] font-semibold leading-[1.22] tracking-tight text-foreground md:text-[3.1rem] lg:text-[3.5rem] lg:leading-[1.18]">
                 ভালো বইয়ের খোঁজ,
                 <span className="block">
                   শেষ হোক <span className="text-forest">এখানেই।</span>
@@ -136,25 +127,31 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Category index, quiet rows ───────────────────────────────────── */}
+      {/* ── Browse by category, soft plate cards ─────────────────────────── */}
       {modules.categories.length > 0 ? (
         <section aria-labelledby="home-categories" className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
           <div id="home-categories" className="scroll-mt-24">
-            <SectionHead kicker="বিভাগ" title="যা খুঁজছেন, বেছে নিন" link={{ href: "/shop", text: "সব বই" }} />
+            <SectionHead title="যা খুঁজছেন, বেছে নিন" link={{ href: "/shop", text: "সব বই" }} />
           </div>
-          <ul className="grid lg:grid-cols-2 lg:gap-x-14">
-            {modules.categories.map((c, i) => (
-              <li key={c.slug} className="border-b border-hairline">
-                <Link href={`/category/${c.slug}`} className="group flex items-center gap-4 py-4 pr-2">
-                  <span aria-hidden className="w-8 shrink-0 font-mono text-xs text-muted-foreground">{bnPad(i + 1)}</span>
-                  <span className="flex-1 text-[15px] font-medium leading-snug text-foreground transition-colors group-hover:text-forest md:text-base">
-                    {c.name}
+          <ul className="grid grid-cols-2 gap-4 md:gap-5 lg:grid-cols-3">
+            {modules.categories.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  href={`/category/${c.slug}`}
+                  className="group flex h-full flex-col justify-between gap-10 rounded-2xl bg-sand p-5 transition-colors duration-300 hover:bg-[#eae7db] md:p-6"
+                >
+                  <span className="font-mono text-[11px] text-muted-foreground">{bnNum(c.productCount)} বই</span>
+                  <span className="flex items-end justify-between gap-3">
+                    <span className="font-bengali-serif text-lg font-semibold leading-snug tracking-tight text-foreground transition-colors group-hover:text-forest md:text-xl">
+                      {c.name}
+                    </span>
+                    <span
+                      aria-hidden
+                      className="grid size-9 shrink-0 place-items-center rounded-full border border-border text-foreground/50 transition-all duration-300 group-hover:border-forest group-hover:bg-forest group-hover:text-primary-foreground"
+                    >
+                      <ArrowRight className="size-4" />
+                    </span>
                   </span>
-                  <span className="text-xs text-muted-foreground">{bnNum(c.productCount)} বই</span>
-                  <ArrowRight
-                    aria-hidden
-                    className="size-4 shrink-0 -translate-x-1 text-forest opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
-                  />
                 </Link>
               </li>
             ))}
@@ -165,8 +162,7 @@ export default async function HomePage() {
       {isEmpty ? (
         /* ── Catalog empty state ────────────────────────────────────────── */
         <section className="mx-auto w-full max-w-6xl px-4 py-20 text-center sm:px-6">
-          <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-muted-foreground">খালি তাক</p>
-          <h2 className="mt-3 font-bengali-serif text-3xl font-semibold">ক্যাটালগ এখনও প্রস্তুত নয়</h2>
+          <h2 className="font-bengali-serif text-3xl font-semibold">ক্যাটালগ এখনও প্রস্তুত নয়</h2>
           <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
             আমরা এই মুহূর্তে দোকান সাজাচ্ছি। বইগুলো যোগ হওয়ার সঙ্গে সঙ্গে এখানে দেখতে পাবেন।
           </p>
@@ -183,7 +179,7 @@ export default async function HomePage() {
           {modules.featured.length > 0 ? (
             <section aria-labelledby="home-featured" className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
               <div id="home-featured" className="scroll-mt-24">
-                <SectionHead kicker="বেস্টসেলার" title="পাঠকের হাতে যা আছে" link={{ href: "/shop", text: "সব বই" }} />
+                <SectionHead title="পাঠকের হাতে যা আছে" link={{ href: "/shop", text: "সব বই" }} />
               </div>
               <ProductGrid products={modules.featured} colsClass="grid-cols-2 md:grid-cols-3 xl:grid-cols-6" />
             </section>
@@ -196,10 +192,12 @@ export default async function HomePage() {
               <div className="p-8 md:p-12">
                 {deal ? (
                   <>
-                    <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-forest">সাপ্তাহিক ডিল</p>
-                    <h3 className="mt-3 font-bengali-serif text-2xl font-semibold leading-snug tracking-tight md:text-[1.75rem]">
-                      {deal.card.title}
+                    <h3 className="font-bengali-serif text-xl font-semibold leading-snug tracking-tight text-forest md:text-[1.35rem]">
+                      এই সপ্তাহের ডিল
                     </h3>
+                    <p className="mt-4 font-bengali-serif text-2xl font-semibold leading-snug tracking-tight md:text-[1.75rem]">
+                      {deal.card.title}
+                    </p>
                     <p className="mt-1.5 text-sm text-muted-foreground">{deal.card.authorDisplay}</p>
                     <p className="mt-5 flex flex-wrap items-baseline gap-3">
                       <span className="font-bengali-serif text-[2.1rem] font-semibold text-foreground">
@@ -226,10 +224,12 @@ export default async function HomePage() {
                   </>
                 ) : (
                   <>
-                    <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-forest">সাপ্তাহিক বাছাই</p>
-                    <h3 className="mt-3 font-bengali-serif text-2xl font-semibold leading-snug tracking-tight md:text-[1.75rem]">
-                      এই সপ্তাহের পড়ার তালিকা
+                    <h3 className="font-bengali-serif text-xl font-semibold leading-snug tracking-tight text-forest md:text-[1.35rem]">
+                      এই সপ্তাহের বাছাই
                     </h3>
+                    <p className="mt-4 font-bengali-serif text-2xl font-semibold leading-snug tracking-tight md:text-[1.75rem]">
+                      পড়ার তালিকা তৈরি হোক এখানেই
+                    </p>
                     <p className="mt-3.5 max-w-md text-sm leading-relaxed text-muted-foreground">
                       সম্পাদকদের হাত ঘুরে আসা বইগুলো এক নজরে দেখে নিন, পছন্দের ফরম্যাট আপনি বেছে নিন।
                     </p>
@@ -277,7 +277,7 @@ export default async function HomePage() {
           {modules.collections.length > 0 ? (
             <section aria-labelledby="home-collections" className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
               <div id="home-collections" className="scroll-mt-24">
-                <SectionHead kicker="সংগ্রহ" title="এক সুতোয় গাঁথা বইয়ের তাক" />
+                <SectionHead title="এক সুতোয় গাঁথা বইয়ের তাক" />
               </div>
               <div className="grid gap-6 lg:grid-cols-2">
                 {modules.collections.map((col) => (
@@ -344,8 +344,7 @@ export default async function HomePage() {
             <div id="home-newsletter" className="sr-only">নিউজলেটার</div>
             <div className="grid overflow-hidden rounded-2xl bg-forest-deep lg:grid-cols-[1.05fr_1fr]">
               <div className="p-8 md:p-12">
-                <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-[#9dc3a8]">নিউজলেটার</p>
-                <h3 className="mt-3 font-bengali-serif text-2xl font-semibold leading-snug tracking-tight text-[#f2f4ea] md:text-[1.75rem]">
+                <h3 className="font-bengali-serif text-2xl font-semibold leading-snug tracking-tight text-[#f2f4ea] md:text-[1.75rem]">
                   নতুন বইয়ের খবর সবার আগে।
                 </h3>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-[#dfe7da]/70">
@@ -372,7 +371,6 @@ export default async function HomePage() {
             <section aria-labelledby="home-arrivals" className="mx-auto w-full max-w-6xl px-4 pb-16 pt-2 sm:px-6 lg:px-8">
               <div id="home-arrivals" className="scroll-mt-24">
                 <SectionHead
-                  kicker="সদ্য যোগ হয়েছে"
                   title="নতুন প্রকাশনা"
                   link={{ href: "/shop?sort=newest", text: "সব নতুন বই" }}
                 />

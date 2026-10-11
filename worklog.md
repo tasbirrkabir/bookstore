@@ -274,3 +274,18 @@ Work Log:
 Stage Summary:
 - The storefront is now quiet minimalism: whitespace, hairlines, one deep green accent, calm serif weights, soft shadows, clean photography. Every brutalist element (thick ink borders, hard offset shadows, stamps, marquee, grain, rotated plates, coupon ticket) is gone.
 - All four site photos remain in use (hero x2, deal, newsletter). All claims (counts, prices, discounts) stay grounded in the DB. Cart, newsletter, product, shop pages all verified working with the new tokens.
+---
+Task ID: 7
+Agent: Z.ai Code (main)
+Task: User feedback round 5 with three marked mobile screenshots: (1) remove the small uppercase kicker labels above headlines at page starts, (2) the newsletter mail submission form looks bad, make it better, (3) rebuild the whole category index section, user dislikes it entirely.
+
+Work Log:
+- page.tsx: removed every uppercase tracked kicker/eyebrow label. Hero now opens directly with the serif headline (no "স্বাধীন বইয়ের দোকান" eyebrow, no green dot). SectionHead component dropped its kicker prop, so বিভাগ / বেস্টসেলার / সংগ্রহ / নতুন প্রকাশনা sections now start straight with the serif title. Empty state lost its "খালি তাক" label. Deal band's uppercase "সাপ্তাহিক ডিল" became a normal-case serif green heading (এই সপ্তাহের ডিল) above the book title; fallback variant got the same treatment. Newsletter band lost its uppercase "নিউজলেটার" kicker. Verified via grep that no other storefront page starts with such labels (footer column headings kept, they are standard nav labels).
+- Category section rebuilt (was numbered hairline rows): now a responsive grid of soft sand plate cards (grid-cols-2 mobile, lg:grid-cols-3), each card: mono count top-left ("৩ বই"), serif category name bottom-left, circular arrow button bottom-right that fills forest green on hover, card tint deepens on hover. Matches the product-cover plate language.
+- newsletter-form.tsx redesigned: one-row pill (h-14 rounded-full input) with an embedded circular submit button (size-11, arrow icon) inside on the right, replacing the stacked full-width input + button that looked bad on mobile. Success state is now a rounded-full pill. tone="onDark" variant for the green band kept. E2E re-verified.
+- QA: lint clean, tsc clean for src. Browser verification: mobile 375 (hero without kicker, category 2-col cards, newsletter pill form + submit success), desktop 1440 (deal band with serif label and real ৳৮৫০ / strike ৳১,০০০ / -১৫% pill, category 3-col cards). Newsletter QA rows deleted after both tests. Console clean, no em or en dashes in touched files.
+
+Stage Summary:
+- No page on the storefront opens with an uppercase micro-label anymore; headlines start directly.
+- Newsletter form is a compact elegant pill with an embedded round submit button, verified end to end.
+- Category browsing is now soft sand plate cards consistent with the product cards.

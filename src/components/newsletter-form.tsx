@@ -6,6 +6,7 @@ import { Loader2, MailCheck, ArrowRight } from "lucide-react";
 /**
  * Newsletter subscribe form for the home page band.
  * Posts to /api/newsletter; success and errors are shown inline.
+ * Single-row pill with an embedded round submit button.
  * tone="onDark" adapts colors for the deep green newsletter band.
  */
 export function NewsletterForm({ tone = "light" }: { tone?: "light" | "onDark" }) {
@@ -43,8 +44,8 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "onDark" }
       <div
         className={
           tone === "onDark"
-            ? "flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3.5 text-sm text-[#eef4ea]"
-            : "flex items-center gap-3 rounded-xl bg-forest-soft px-4 py-3.5 text-sm text-forest-deep"
+            ? "flex items-center gap-3 rounded-full bg-white/10 py-3.5 pl-5 pr-6 text-sm text-[#eef4ea]"
+            : "flex items-center gap-3 rounded-full bg-forest-soft py-3.5 pl-5 pr-6 text-sm text-forest-deep"
         }
       >
         <MailCheck aria-hidden className="size-5 shrink-0 text-forest" />
@@ -55,12 +56,17 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "onDark" }
 
   const inputClass =
     tone === "onDark"
-      ? "h-12 flex-1 rounded-full border border-white/20 bg-white/10 px-5 text-sm text-white placeholder:text-white/50 outline-none transition-colors focus:border-white/50"
-      : "h-12 flex-1 rounded-full border border-border bg-card px-5 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-forest/50";
+      ? "h-14 w-full rounded-full border border-white/20 bg-white/10 pl-5 pr-16 text-sm text-white placeholder:text-white/50 outline-none transition-colors focus:border-white/55"
+      : "h-14 w-full rounded-full border border-border bg-card pl-5 pr-16 text-sm text-foreground placeholder:text-muted-foreground outline-none transition-colors focus:border-forest/50";
+
+  const submitClass =
+    tone === "onDark"
+      ? "absolute right-1.5 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#f2f4ea] text-forest-deep transition-colors hover:bg-white disabled:opacity-60"
+      : "absolute right-1.5 top-1/2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-forest text-primary-foreground transition-colors hover:bg-forest-deep disabled:opacity-60";
 
   return (
-    <form onSubmit={onSubmit} className="space-y-2" noValidate>
-      <div className="flex flex-col gap-2.5 sm:flex-row">
+    <form onSubmit={onSubmit} className="space-y-2.5" noValidate>
+      <div className="relative">
         <label htmlFor="newsletter-email" className="sr-only">
           ইমেইল ঠিকানা
         </label>
@@ -77,28 +83,22 @@ export function NewsletterForm({ tone = "light" }: { tone?: "light" | "onDark" }
         <button
           type="submit"
           disabled={state === "busy"}
-          className={
-            tone === "onDark"
-              ? "inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#f2f4ea] px-7 text-sm font-semibold text-forest-deep transition-colors hover:bg-white disabled:opacity-60"
-              : "inline-flex h-12 items-center justify-center gap-2 rounded-full bg-forest px-7 text-sm font-semibold text-primary-foreground transition-colors hover:bg-forest-deep disabled:opacity-60"
-          }
+          aria-label="সাবস্ক্রাইব করুন"
+          className={submitClass}
         >
           {state === "busy" ? (
             <Loader2 aria-hidden className="size-4 animate-spin" />
           ) : (
-            <ArrowRight aria-hidden className="size-4" />
+            <ArrowRight aria-hidden className="size-[18px]" />
           )}
-          সাবস্ক্রাইব
         </button>
       </div>
       {state === "error" && message ? (
-        <p role="alert" className={
-          tone === "onDark" ? "text-xs font-medium text-[#f0c9b5]" : "text-xs font-medium text-press-deep"
-        }>
+        <p role="alert" className="pl-2 text-xs font-medium text-press-deep">
           {message}
         </p>
       ) : (
-        <p className={tone === "onDark" ? "text-xs text-white/55" : "text-xs text-muted-foreground"}>
+        <p className={tone === "onDark" ? "pl-2 text-xs text-white/55" : "pl-2 text-xs text-muted-foreground"}>
           শুধু বই আর পড়ার খবর, বাড়তি মেইল নয়।
         </p>
       )}
